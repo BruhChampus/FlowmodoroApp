@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_red"
+    tools:context=".MainScreenFragment">
+
+    <TextView
+        android:id="@+id/tv_app_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/flowmodoro_icon_circle"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="100dp"
+        android:text="@string/flowmodoro"
+        android:textColor="@color/white"
+        android:textSize="42sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_settings" />
+
+    <ImageView
+        android:id="@+id/iv_settings"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/left_icon_angle_background"
+        android:padding="10dp"
+        android:src="@drawable/settings"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/light_red" />
+
+    <ImageView
+        android:id="@+id/iv_statistics"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/right_icon_angle_background"
+        android:padding="10dp"
+        android:src="@drawable/bar_chart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/light_red" />
+
+    <EditText
+        android:id="@+id/et_task_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="Task Name"
+        android:textColorHint="@color/white"
+        android:textSize="28dp"
+        app:layout_constraintBottom_toTopOf="@id/iv_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_app_logo" />
+
+    <ImageView
+        android:id="@+id/iv_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:backgroundTint="@color/light_red"
+        android:src="@drawable/start_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_task_name" />
+</androidx.constraintlayout.widget.ConstraintLayout>

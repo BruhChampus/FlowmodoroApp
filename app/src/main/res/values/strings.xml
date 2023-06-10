@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FlowmodoroApp</string>
+    <string name="flowmodoro">Flowmodoro</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="task_name">Task name</string>
+    <string name="breakWord">Break</string>
+    <string name="concentrate">Concentrate</string>
+    <string name="are_you_sure_you_want_to_leave">Are you sure you want to leave?</string>
+    <string name="settings">Settings</string>
+</resources>
