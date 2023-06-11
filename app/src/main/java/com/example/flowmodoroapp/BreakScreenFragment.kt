@@ -1,11 +1,14 @@
-
 package com.example.flowmodoroapp
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import com.example.flowmodoroapp.databinding.FragmentBreakScreenBinding
+import com.example.flowmodoroapp.databinding.LeaveDialogBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +24,7 @@ class BreakScreenFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding: FragmentBreakScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +38,21 @@ class BreakScreenFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        binding = FragmentBreakScreenBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_break_screen, container, false)
+        binding.ivStop.setOnClickListener {
+            val dialogBinding = LeaveDialogBinding.inflate(layoutInflater)
+            val dialog =
+                AlertDialog.Builder(requireContext()).setView(dialogBinding.clLeaveDialog).create()
+            dialogBinding.ivConfirm.setOnClickListener {
+                it.findNavController().navigate(R.id.mainScreenFragment)
+            }
+            dialogBinding.ivDismiss.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
+        return binding.root
     }
 
     companion object {
