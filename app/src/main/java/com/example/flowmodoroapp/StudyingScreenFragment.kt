@@ -1,10 +1,18 @@
 package com.example.flowmodoroapp
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.flowmodoroapp.databinding.FragmentMainScreenBinding
+import com.example.flowmodoroapp.databinding.FragmentStudyingScreenBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +28,7 @@ class StudyingScreenFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding: FragmentStudyingScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +42,18 @@ class StudyingScreenFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        binding = FragmentStudyingScreenBinding.inflate(layoutInflater)
+        binding.ivStop.setOnClickListener {
+            it.findNavController().navigate(R.id.leaveDialog)
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().navigate(R.id.leaveDialog)
+        }
+        binding.ivBreak.setOnClickListener {
+            it.findNavController().navigate(R.id.breakScreenFragment)
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_studying_screen, container, false)
+        return binding.root
     }
 
     companion object {
