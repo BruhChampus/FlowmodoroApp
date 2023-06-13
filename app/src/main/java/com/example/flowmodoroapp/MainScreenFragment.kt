@@ -1,10 +1,13 @@
 package com.example.flowmodoroapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.flowmodoroapp.databinding.FragmentMainScreenBinding
@@ -23,7 +26,7 @@ class MainScreenFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding:FragmentMainScreenBinding
+    private lateinit var binding: FragmentMainScreenBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,14 +44,20 @@ class MainScreenFragment : Fragment() {
         binding.ivStart.setOnClickListener {
             it.findNavController().navigate(R.id.studyingScreenFragment)
         }
-        binding.ivSettings.setOnClickListener{
+        binding.ivSettings.setOnClickListener {
             it.findNavController().navigate(R.id.settingsFragment)
         }
 
-        binding.ivResults.setOnClickListener{
+        binding.ivResults.setOnClickListener {
             it.findNavController().navigate(R.id.resultsScreenFragment)
         }
 
+        binding.flAppLogo.setOnClickListener {
+            Toast.makeText(requireContext(), "Hello there!", Toast.LENGTH_SHORT).show()
+            //TODO with help of coroutines add delay
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){}//This must be so, so we cannot comeback to breakFragment or studyFragment.
         // Inflate the layout for this fragment
         return binding.root
     }

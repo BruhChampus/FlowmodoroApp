@@ -7,21 +7,26 @@
     android:background="@color/light_red"
     tools:context=".MainScreenFragment">
 
-    <TextView
-        android:id="@+id/tv_app_logo"
+    <FrameLayout
+        android:id="@+id/fl_app_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:background="@drawable/ripple_app_icon_circle"
         android:paddingHorizontal="10dp"
         android:paddingVertical="100dp"
-        android:text="@string/flowmodoro"
-        android:textColor="@color/white"
-        android:textSize="42sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_settings" />
+        app:layout_constraintTop_toBottomOf="@id/iv_settings">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flowmodoro"
+            android:textColor="@color/white"
+            android:textSize="42sp"
+            android:textStyle="bold" />
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/iv_settings"
@@ -59,7 +64,7 @@
         app:layout_constraintBottom_toTopOf="@id/iv_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_app_logo" />
+        app:layout_constraintTop_toBottomOf="@id/fl_app_logo" />
 
     <ImageView
         android:id="@+id/iv_start"

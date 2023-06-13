@@ -8,10 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.flowmodoroapp.databinding.FragmentMainScreenBinding
 import com.example.flowmodoroapp.databinding.FragmentStudyingScreenBinding
-import com.example.flowmodoroapp.databinding.LeaveDialogBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,20 +44,11 @@ class StudyingScreenFragment : Fragment() {
     ): View? {
         binding = FragmentStudyingScreenBinding.inflate(layoutInflater)
         binding.ivStop.setOnClickListener {
-            val dialogBinding = LeaveDialogBinding.inflate(layoutInflater)
-            val dialog =
-                AlertDialog.Builder(requireContext()).setView(dialogBinding.clLeaveDialog).create()
-            dialogBinding.ivConfirm.setOnClickListener {
-                it.findNavController().navigate(R.id.mainScreenFragment)
-                //TODO fix bug, when clicking on confirmBTN app is crashing
-            }
-            dialogBinding.ivDismiss.setOnClickListener {
-                dialog.dismiss()
-            }
-            dialog.show()
+            it.findNavController().navigate(R.id.leaveDialog)
         }
-
-
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().navigate(R.id.leaveDialog)
+        }
         binding.ivBreak.setOnClickListener {
             it.findNavController().navigate(R.id.breakScreenFragment)
         }
