@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainScreenFragment">
+
+    <fragment
+        android:id="@+id/mainScreenFragment"
+        android:name="com.example.flowmodoroapp.MainScreenFragment"
+        android:label="fragment_main_screen"
+        tools:layout="@layout/fragment_main_screen">
+        <action
+            android:id="@+id/action_mainScreenFragment_to_studyingScreenFragment"
+            app:destination="@id/studyingScreenFragment" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_resultsScreenFragment"
+            app:destination="@id/resultsScreenFragment" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studyingScreenFragment"
+        android:name="com.example.flowmodoroapp.StudyingScreenFragment"
+        android:label="StudyingScreenFragment">
+        <action
+            android:id="@+id/action_studyingScreenFragment_to_breakScreenFragment"
+            app:destination="@id/breakScreenFragment"
+         />
+        <action
+            android:id="@+id/action_studyingScreenFragment_to_leaveDialog"
+            app:destination="@id/leaveDialog" />
+        <action
+            android:id="@+id/action_studyingScreenFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/breakScreenFragment"
+        android:name="com.example.flowmodoroapp.BreakScreenFragment"
+        android:label="fragment_break_screen"
+        tools:layout="@layout/fragment_break_screen">
+        <action
+            android:id="@+id/action_breakScreenFragment_to_mainScreenFragment2"
+            app:destination="@id/mainScreenFragment"
+            />
+        <action
+            android:id="@+id/action_breakScreenFragment_to_leaveDialog"
+            app:destination="@id/leaveDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultsScreenFragment"
+        android:name="com.example.flowmodoroapp.ResultsScreenFragment"
+        android:label="ResultsScreenFragment">
+        <action
+            android:id="@+id/action_resultsScreenFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.flowmodoroapp.SettingsFragment"
+        android:label="SettingsFragment">
+        <action
+            android:id="@+id/action_settingsFragment_to_resultsScreenFragment"
+            app:destination="@id/resultsScreenFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/leaveDialog"
+        android:name="com.example.flowmodoroapp.LeaveDialog"
+        android:label="LeaveDialog" />
+</navigation>

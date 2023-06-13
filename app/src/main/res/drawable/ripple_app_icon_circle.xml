@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/dark_red">
+    <item android:id="@android:id/mask">
+        <shape
+            android:innerRadius="2.1dp"
+            android:shape="oval">
+            <solid android:color="@color/dark_red" />
+        </shape>
+    </item>
+
+    <item android:drawable="@drawable/flowmodoro_icon_circle"></item>
+</ripple>
