@@ -34,6 +34,10 @@
         <action
             android:id="@+id/action_studyingScreenFragment_to_mainScreenFragment"
             app:destination="@id/mainScreenFragment" />
+        <argument
+            android:name="task_name"
+            app:argType="string"
+            android:defaultValue='' />
     </fragment>
     <fragment
         android:id="@+id/breakScreenFragment"

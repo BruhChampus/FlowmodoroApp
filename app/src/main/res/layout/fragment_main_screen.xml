@@ -60,7 +60,7 @@
         android:maxLength="30"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:textSize="28dp"
+        android:textSize="28sp"
         app:layout_constraintBottom_toTopOf="@id/iv_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

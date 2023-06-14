@@ -42,7 +42,11 @@ class MainScreenFragment : Fragment() {
         binding = FragmentMainScreenBinding.inflate(layoutInflater)
 
         binding.ivStart.setOnClickListener {
-            it.findNavController().navigate(R.id.studyingScreenFragment)
+            val action =
+                MainScreenFragmentDirections.actionMainScreenFragmentToStudyingScreenFragment(
+                    binding.etTaskName.text.toString()
+                )
+            it.findNavController().navigate(action)
         }
         binding.ivSettings.setOnClickListener {
             it.findNavController().navigate(R.id.settingsFragment)
@@ -57,7 +61,7 @@ class MainScreenFragment : Fragment() {
             //TODO with help of coroutines add delay
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){requireActivity().finish()}
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { requireActivity().finish() }
         // Inflate the layout for this fragment
         return binding.root
     }
