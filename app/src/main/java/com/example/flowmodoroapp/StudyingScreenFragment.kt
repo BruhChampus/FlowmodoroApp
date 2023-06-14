@@ -1,25 +1,24 @@
 package com.example.flowmodoroapp
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.flowmodoroapp.databinding.FragmentMainScreenBinding
 import com.example.flowmodoroapp.databinding.FragmentStudyingScreenBinding
 
 
 class StudyingScreenFragment : Fragment() {
 
     private lateinit var binding: FragmentStudyingScreenBinding
-    val args: StudyingScreenFragmentArgs by navArgs()
+    private val args: StudyingScreenFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -27,19 +26,47 @@ class StudyingScreenFragment : Fragment() {
 
         binding = FragmentStudyingScreenBinding.inflate(layoutInflater)
 
+        val viewModel = ViewModelProvider(this)[StudyingScreenFragmentViewModel::class.java]
+        viewModel.startStudyTimer()
+
+        viewModel.timeLiveData.observe(this) {
+            binding.tvTimer.text = it
+        }
+
+        viewModel.studyingTimeLiveData.observe(this) {
+            binding.tvTimeStudy.text = "You're studying: ${viewModel.studyingTimeLiveData.value}"
+        }
+
         binding.ivStop.setOnClickListener {
             it.findNavController().navigate(R.id.leaveDialog)
         }
+
+        binding.ivBreak.setOnClickListener {
+            if (viewModel.studyingTimeLiveData.value!! < 1) {
+                Toast.makeText(
+                    requireContext(),
+                    "Atleast 1 minute must pass",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                val action =
+                    StudyingScreenFragmentDirections.actionStudyingScreenFragmentToBreakScreenFragment(
+                        binding.tvTaskName.text.toString(),
+                        viewModel.studyingTimeLiveData.value ?: 1
+                    )
+                it.findNavController().navigate(action)
+            }
+        }
+
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(R.id.leaveDialog)
 
         }
-        binding.ivBreak.setOnClickListener {
-            it.findNavController().navigate(R.id.breakScreenFragment)
-        }
 
 
         binding.tvTaskName.text = args.taskName
+
 
         // Inflate the layout for this fragment
         return binding.root

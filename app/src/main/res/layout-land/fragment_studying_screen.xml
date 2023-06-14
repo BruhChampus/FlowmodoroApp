@@ -28,19 +28,21 @@
         android:background="@drawable/flowmodoro_icon_circle"
         android:paddingHorizontal="50dp"
         android:paddingVertical="75dp"
-        tools:text="23:05"
         android:textColor="@color/white"
         android:textSize="38sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_concentrate" />
+        app:layout_constraintTop_toBottomOf="@id/tv_concentrate"
+        tools:text="23:05" />
 
     <TextView
         android:id="@+id/tv_task_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:padding="6dp"
         android:text="@string/task_name"
         android:textColor="@color/white"
         android:textSize="28sp"

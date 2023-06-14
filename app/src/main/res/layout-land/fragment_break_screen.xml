@@ -29,7 +29,7 @@
         android:background="@drawable/flowmodoro_icon_circle"
         android:paddingHorizontal="50dp"
         android:paddingVertical="75dp"
-        android:text="23:05"
+        tools:text="23:05"
         android:textColor="@color/white"
         android:textSize="38sp"
         android:textStyle="bold"
@@ -43,6 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:padding="6dp"
         android:text="@string/task_name"
         android:textColor="@color/white"
         android:textSize="28sp"
@@ -58,14 +60,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="Time studying: 32 mins"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_task_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_timer"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Time studying: 32 mins" />
 
 
     <ImageView
