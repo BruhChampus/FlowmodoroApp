@@ -11,20 +11,20 @@
         android:id="@+id/fl_app_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/ripple_app_icon_circle"
         android:paddingHorizontal="10dp"
-        android:paddingVertical="100dp"
+        android:paddingVertical="90dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_settings">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/flowmodoro"
             android:textColor="@color/white"
-            android:textSize="42sp"
+            android:textSize="38sp"
             android:textStyle="bold" />
     </FrameLayout>
 
@@ -53,28 +53,33 @@
     <EditText
         android:id="@+id/et_task_name"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="5dp"
         android:background="@null"
-        android:gravity="center"
+         android:gravity="center"
         android:hint="Task Name"
         android:maxLength="30"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@id/iv_start"
+        android:textSize="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_start"
         app:layout_constraintTop_toBottomOf="@id/fl_app_logo" />
 
     <ImageView
         android:id="@+id/iv_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="40dp"
         android:adjustViewBounds="true"
         android:backgroundTint="@color/light_red"
         android:src="@drawable/start_circle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/et_task_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_task_name" />
+        app:layout_constraintTop_toBottomOf="@id/fl_app_logo" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

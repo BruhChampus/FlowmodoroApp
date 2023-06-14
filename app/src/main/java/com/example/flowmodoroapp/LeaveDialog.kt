@@ -1,16 +1,16 @@
 package com.example.flowmodoroapp
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.flowmodoroapp.databinding.FragmentMainScreenBinding
+import com.example.flowmodoroapp.databinding.FragmentLeaveDialogBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,14 +19,15 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MainScreenFragment.newInstance] factory method to
+ * Use the [LeaveDialog.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MainScreenFragment : Fragment() {
+class LeaveDialog : DialogFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: FragmentMainScreenBinding
+    private lateinit var binding: FragmentLeaveDialogBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -39,29 +40,17 @@ class MainScreenFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentMainScreenBinding.inflate(layoutInflater)
-
-        binding.ivStart.setOnClickListener {
-            val action =
-                MainScreenFragmentDirections.actionMainScreenFragmentToStudyingScreenFragment(
-                    binding.etTaskName.text.toString()
-                )
-            it.findNavController().navigate(action)
+        binding = FragmentLeaveDialogBinding.inflate(layoutInflater)
+        binding.ivConfirm.setOnClickListener {
+            findNavController().navigate(R.id.mainScreenFragment)
+            dismiss()
         }
-        binding.ivSettings.setOnClickListener {
-            it.findNavController().navigate(R.id.settingsFragment)
+        binding.ivDismiss.setOnClickListener {
+            dismiss()
         }
 
-        binding.ivResults.setOnClickListener {
-            it.findNavController().navigate(R.id.resultsScreenFragment)
-        }
 
-        binding.flAppLogo.setOnClickListener {
-            Toast.makeText(requireContext(), "Hello there!", Toast.LENGTH_SHORT).show()
-            //TODO with help of coroutines add delay
-        }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { requireActivity().finish() }
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -73,12 +62,12 @@ class MainScreenFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment MainScreenFragment.
+         * @return A new instance of fragment LeaveDialog.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MainScreenFragment().apply {
+            LeaveDialog().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_red">
+    android:background="@color/light_red"
+    tools:context=".BreakScreenFragment">
 
 
     <TextView
@@ -12,8 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="@string/concentrate"
+        android:text="@string/breakWord"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -25,14 +25,15 @@
         android:id="@+id/tv_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/flowmodoro_icon_circle"
-        android:paddingHorizontal="70dp"
-        android:paddingVertical="100dp"
+        android:paddingHorizontal="50dp"
+        android:paddingVertical="75dp"
         android:text="23:05"
         android:textColor="@color/white"
-        android:textSize="42sp"
+        android:textSize="38sp"
         android:textStyle="bold"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_concentrate" />
@@ -45,7 +46,7 @@
         android:text="@string/task_name"
         android:textColor="@color/white"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@id/tv_time_study"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_timer" />
@@ -53,17 +54,18 @@
 
     <TextView
         android:id="@+id/tv_time_study"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Time studying: 32 mins"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/iv_stop"
+        app:layout_constraintBottom_toTopOf="@id/tv_task_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_task_name"
-        tools:text="Time studying: 32 mins" />
+        app:layout_constraintStart_toEndOf="@id/tv_timer"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
@@ -74,21 +76,9 @@
         android:backgroundTint="@color/light_red"
         android:src="@drawable/stop_circle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/iv_break"
+        app:layout_constraintEnd_toStartOf="@id/tv_timer"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_time_study" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/iv_break"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:backgroundTint="@color/light_red"
-        android:src="@drawable/free_breakfast"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_stop"
-        app:layout_constraintTop_toBottomOf="@id/tv_time_study" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
