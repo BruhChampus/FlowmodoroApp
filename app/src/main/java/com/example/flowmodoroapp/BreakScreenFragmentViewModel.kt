@@ -12,6 +12,12 @@ class BreakScreenFragmentViewModel : ViewModel() {
         get() = timeMutableLiveData
 
 
+    private var isTimerOn = MutableLiveData<Boolean>(true)
+    val isTimerOnLiveData: LiveData<Boolean>
+        get() = isTimerOn
+
+
+
     private var countDownTimer: CountDownTimer? = null
 
     fun startBreakTimer(minutes: Int) {
@@ -21,23 +27,28 @@ class BreakScreenFragmentViewModel : ViewModel() {
             countDownTimer = object : CountDownTimer(millisInFuture, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                    timeMutableLiveData.value = updateTimerText(millisUntilFinished)
+                    Log.i("BreakTimer", "ticking")
+
                 }
 
                 override fun onFinish() {
+                    isTimerOn.value = false
+                    countDownTimer = null
+
+
                 }
             }
-            Log.i("Break", "started????")
             (countDownTimer as CountDownTimer).start()
+            Log.i("BreakTimer", "started")
         }
-        Log.i("Break", "not null")
+        Log.i("BreakTimer", "not null")
 
     }
 
 
-    fun stopBreakTimer() {
-        countDownTimer?.onFinish()
-        countDownTimer = null
-    }
+     fun stopBreakTimer() {
+         countDownTimer?.onFinish()
+     }
 
     private fun updateTimerText(millisUntilFinished: Long): String {
         val minutes = (millisUntilFinished / 1000) / 60

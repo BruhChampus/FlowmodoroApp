@@ -1,6 +1,8 @@
 package com.example.flowmodoroapp
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +21,7 @@ class StudyingScreenFragment : Fragment() {
 
     private lateinit var binding: FragmentStudyingScreenBinding
     private val args: StudyingScreenFragmentArgs by navArgs()
+    private lateinit var viewModel:StudyingScreenFragmentViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -26,7 +29,7 @@ class StudyingScreenFragment : Fragment() {
 
         binding = FragmentStudyingScreenBinding.inflate(layoutInflater)
 
-        val viewModel = ViewModelProvider(this)[StudyingScreenFragmentViewModel::class.java]
+          viewModel = ViewModelProvider(this)[StudyingScreenFragmentViewModel::class.java]
         viewModel.startStudyTimer()
 
         viewModel.timeLiveData.observe(this) {
@@ -34,7 +37,14 @@ class StudyingScreenFragment : Fragment() {
         }
 
         viewModel.studyingTimeLiveData.observe(this) {
-            binding.tvTimeStudy.text = "You're studying: ${viewModel.studyingTimeLiveData.value}"
+
+            val studyTimePluralsValue = viewModel.studyingTimeLiveData.value?.let { studyTime ->
+                this.resources.getQuantityString(
+                    R.plurals.plulars_minutes,
+                    studyTime, studyTime
+                )
+            }
+             binding.tvTimeStudy.text = resources.getString(R.string.youre_studying).plus(studyTimePluralsValue)
         }
 
         binding.ivStop.setOnClickListener {
@@ -45,7 +55,7 @@ class StudyingScreenFragment : Fragment() {
             if (viewModel.studyingTimeLiveData.value!! < 1) {
                 Toast.makeText(
                     requireContext(),
-                    "Atleast 1 minute must pass",
+                    "Atleast 1 minute needs to pass",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
@@ -54,6 +64,7 @@ class StudyingScreenFragment : Fragment() {
                         binding.tvTaskName.text.toString(),
                         viewModel.studyingTimeLiveData.value ?: 1
                     )
+                viewModel.stopStudyTimer()
                 it.findNavController().navigate(action)
             }
         }
@@ -61,9 +72,7 @@ class StudyingScreenFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(R.id.leaveDialog)
-
         }
-
 
         binding.tvTaskName.text = args.taskName
 
@@ -71,6 +80,13 @@ class StudyingScreenFragment : Fragment() {
         // Inflate the layout for this fragment
         return binding.root
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.stopStudyTimer()
+    }
+
 
 
 }

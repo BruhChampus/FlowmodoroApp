@@ -49,6 +49,8 @@ class StudyingScreenFragmentViewModel : ViewModel() {
                             studyingTimeMutableLiveData.value = minutesStudying
                         }
                      }
+                    Log.i("StudyingTimer", "ticking")
+
                 }
             }, 0, 1000)
         }
@@ -59,6 +61,9 @@ class StudyingScreenFragmentViewModel : ViewModel() {
         timer = null
     }
 
+    override fun onCleared() {
+        super.onCleared()
+    }
 
     private fun updateTimerText(millisUntilFinished: Long): String {
         val minutes = (millisUntilFinished / 1000) / 60

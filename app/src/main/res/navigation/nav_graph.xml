@@ -57,6 +57,9 @@
         <argument
             android:name="time_studying"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_breakScreenFragment_to_studyingScreenFragment"
+            app:destination="@id/studyingScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/resultsScreenFragment"

@@ -19,7 +19,7 @@ class BreakScreenFragment : Fragment() {
     private lateinit var binding: FragmentBreakScreenBinding
     private val args: BreakScreenFragmentArgs by navArgs()
 
-
+    private lateinit var viewModel: BreakScreenFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,17 +33,33 @@ class BreakScreenFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(R.id.leaveDialog)
         }
-        val viewModel = ViewModelProvider(this)[BreakScreenFragmentViewModel::class.java]
+        viewModel = ViewModelProvider(this)[BreakScreenFragmentViewModel::class.java]
         val timeStudying = args.timeStudying
         val taskName = args.taskName
-        viewModel.timeLiveData.observe(this){
+        viewModel.timeLiveData.observe(this) {
             binding.tvTimer.text = it
         }
-        viewModel.startBreakTimer(1)
+        viewModel.startBreakTimer(timeStudying)
+
+        viewModel.isTimerOnLiveData.observe(this) {
+            if (it == false) {
+                findNavController().navigate(R.id.studyingScreenFragment)
+            }
+        }
+
         binding.tvTaskName.text = taskName
-        binding.tvTimeStudy.text = "Time studying: $timeStudying mins"
-        //TODO в ресурсах сделать тчоб оно мб автоматически ставилось или посмотри другие варианns
- //TODO quantity string for minutes
+        binding.tvTimeStudy.text = resources.getString(R.string.time_studying).plus(
+            this.resources.getQuantityString(
+                R.plurals.plulars_minutes,
+                timeStudying,
+                timeStudying
+            )
+        )
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.stopBreakTimer()
     }
 }
