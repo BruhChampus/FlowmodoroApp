@@ -1,7 +1,5 @@
 package com.example.flowmodoroapp
 
-import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,56 +13,79 @@ import java.util.TimerTask
 
 
 class StudyingScreenFragmentViewModel : ViewModel() {
+
+    /**Stores a formatted time value (digits that is inside timer)*/
     private var timeMutableLiveData = MutableLiveData<String>()
     val timeLiveData: LiveData<String>
         get() = timeMutableLiveData
 
-    private var studyingTimeMutableLiveData = MutableLiveData<Int>(0)
+
+            /**Stores  total time user is studying*/
+    private var studyingTimeMutableLiveData = MutableLiveData<Int>()
     val studyingTimeLiveData: LiveData<Int>
         get() = studyingTimeMutableLiveData
 
 
-    private var timer: Timer? = null
-    private var elapsedTime: Long = 0
-    private var minutesStudying:Int = 0
-    private var minutesOnDivide = 1
 
-    fun startStudyTimer() {
+    /**
+     * this variable is needed so that after returning from a break, the user cannot press the break button again.
+     * If you use studyingTimeMutableLiveData then the user will be able to constantly press the break,
+     * because the value of how much TOTAL time the user is studying are stored in studyingTimeMutableLiveData*/
+    private var studyingTimeMutableLiveDataLocal = MutableLiveData<Int>(0)
+    val studyingTimeLiveDataLocal: LiveData<Int>
+        get() = studyingTimeMutableLiveDataLocal
+
+
+    private var timer: Timer? = null
+
+//TODO сделать нотификации со звуком, которые будут приходить когда закончился перерыв
+
+  //TODO пофиксить баг, когда открыто окно leaveDialog и переходишь на другой фрагмент, то вылетает приложение
+    //TODO onDestroyView не подошел, найти другой метод останавливать таймеры
+    //TODO сделать что свайпом можно удалять елементы из бд
+    fun startStudyTimer(a: Int) {
         if (timer == null) {
+            var minutesStudying: Int = a
+            studyingTimeMutableLiveData.value = minutesStudying
+
+            var minutesMustPass = 1
+
             timer = Timer()
             val startTime = System.currentTimeMillis()
             timer?.scheduleAtFixedRate(object : TimerTask() {
                 override fun run() {
                     val currentTime = System.currentTimeMillis()
-                    elapsedTime = (currentTime - startTime)
-                     CoroutineScope(Dispatchers.Main).launch {
+                    val elapsedTime = (currentTime - startTime)
+                    CoroutineScope(Dispatchers.Main).launch {
                         timeMutableLiveData.value = updateTimerText(elapsedTime)
                     }
 
                     val minutesPassed = elapsedTime / (1000 * 60)
-                    if (minutesPassed >= minutesOnDivide) {
-                        minutesOnDivide++
+
+                    if (minutesPassed >= minutesMustPass) {
+                        CoroutineScope(Dispatchers.Main).launch { studyingTimeMutableLiveDataLocal.value = minutesPassed.toInt() }
+
+                        minutesMustPass++
                         minutesStudying++
+
                         CoroutineScope(Dispatchers.Main).launch {
                             studyingTimeMutableLiveData.value = minutesStudying
                         }
-                     }
-                    Log.i("StudyingTimer", "ticking")
-
+                    }
                 }
             }, 0, 1000)
         }
     }
+
 
     fun stopStudyTimer() {
         timer?.cancel()
         timer = null
     }
 
-    override fun onCleared() {
-        super.onCleared()
-    }
 
+
+    //Formating time value to normal view
     private fun updateTimerText(millisUntilFinished: Long): String {
         val minutes = (millisUntilFinished / 1000) / 60
         val seconds = (millisUntilFinished / 1000) % 60

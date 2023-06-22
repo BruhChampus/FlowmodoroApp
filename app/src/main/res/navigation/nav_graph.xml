@@ -38,6 +38,10 @@
             android:name="task_name"
             app:argType="string"
             android:defaultValue='' />
+        <argument
+            android:name="time_studying"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/breakScreenFragment"

@@ -30,7 +30,16 @@ class StudyingScreenFragment : Fragment() {
         binding = FragmentStudyingScreenBinding.inflate(layoutInflater)
 
           viewModel = ViewModelProvider(this)[StudyingScreenFragmentViewModel::class.java]
-        viewModel.startStudyTimer()
+
+
+        args.timeStudying.let {
+            Log.i("Stuydying screen timeStudying", "${args.timeStudying}")
+            // viewModel.setStudyingTimeMutableLiveData(it)
+            viewModel.startStudyTimer(args.timeStudying)
+        }
+        args.taskName.let {    binding.tvTaskName.text = it}
+
+        //viewModel.startStudyTimer()
 
         viewModel.timeLiveData.observe(this) {
             binding.tvTimer.text = it
@@ -51,8 +60,8 @@ class StudyingScreenFragment : Fragment() {
             it.findNavController().navigate(R.id.leaveDialog)
         }
 
-        binding.ivBreak.setOnClickListener {
-            if (viewModel.studyingTimeLiveData.value!! < 1) {
+        binding.ivBreak.setOnClickListener {         //1
+            if (viewModel.studyingTimeLiveDataLocal.value!! < 0 ) {
                 Toast.makeText(
                     requireContext(),
                     "Atleast 1 minute needs to pass",
@@ -62,7 +71,8 @@ class StudyingScreenFragment : Fragment() {
                 val action =
                     StudyingScreenFragmentDirections.actionStudyingScreenFragmentToBreakScreenFragment(
                         binding.tvTaskName.text.toString(),
-                        viewModel.studyingTimeLiveData.value ?: 1
+                        //viewModel.studyingTimeLiveData.value?:1
+                    1
                     )
                 viewModel.stopStudyTimer()
                 it.findNavController().navigate(action)
@@ -74,7 +84,6 @@ class StudyingScreenFragment : Fragment() {
             findNavController().navigate(R.id.leaveDialog)
         }
 
-        binding.tvTaskName.text = args.taskName
 
 
         // Inflate the layout for this fragment
@@ -82,11 +91,24 @@ class StudyingScreenFragment : Fragment() {
     }
 
 
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        viewModel.stopStudyTimer()
+//    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.stopStudyTimer()
+        Log.i("YourFragment", "onDestroyView()")
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("YourFragment", "onDestroy()")
+    }
 
+    override fun onDetach() {
+        super.onDetach()
+        Log.i("YourFragment", "onDetach()")
+    }
 
 }

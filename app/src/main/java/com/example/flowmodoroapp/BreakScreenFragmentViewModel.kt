@@ -33,7 +33,7 @@ class BreakScreenFragmentViewModel : ViewModel() {
 
                 override fun onFinish() {
                     isTimerOn.value = false
-                    countDownTimer = null
+                     countDownTimer = null
 
 
                 }
@@ -47,6 +47,7 @@ class BreakScreenFragmentViewModel : ViewModel() {
 
 
      fun stopBreakTimer() {
+         countDownTimer?.cancel()
          countDownTimer?.onFinish()
      }
 
