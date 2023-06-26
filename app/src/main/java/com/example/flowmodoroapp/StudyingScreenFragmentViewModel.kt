@@ -1,5 +1,6 @@
 package com.example.flowmodoroapp
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,9 +40,9 @@ class StudyingScreenFragmentViewModel : ViewModel() {
     private var timer: Timer? = null
 
 //TODO сделать нотификации со звуком, которые будут приходить когда закончился перерыв
+//TODO сделать нотификацию которая будет показівать сколько времени прошло
 
-  //TODO пофиксить баг, когда открыто окно leaveDialog и переходишь на другой фрагмент, то вылетает приложение
-    //TODO onDestroyView не подошел, найти другой метод останавливать таймеры
+     //TODO onDestroyView не подошел, найти другой метод останавливать таймеры
     //TODO сделать что свайпом можно удалять елементы из бд
     fun startStudyTimer(a: Int) {
         if (timer == null) {
@@ -83,6 +84,10 @@ class StudyingScreenFragmentViewModel : ViewModel() {
         timer = null
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        Log.i("OnCleared", "ViewMOdel is cleared")
+    }
 
 
     //Formating time value to normal view

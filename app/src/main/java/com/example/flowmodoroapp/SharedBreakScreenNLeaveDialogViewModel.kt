@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 
 
 
-/**This viewModel is needed is needed in order to communicate with the dialogue.
+/**This viewModel is needed in order to communicate with the dialogue.
  * Needed to prevent the application from crashing when a dialog is open and a transition to another fragment occurs */
 class SharedBreakScreenNLeaveDialogViewModel:ViewModel() {
     private var showDialogIsOpenMutableLiveData = MutableLiveData<Boolean>(false)

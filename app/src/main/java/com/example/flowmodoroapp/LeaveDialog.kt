@@ -20,6 +20,7 @@ import com.example.flowmodoroapp.databinding.FragmentLeaveDialogBinding
 class LeaveDialog : DialogFragment() {
 
     private lateinit var binding: FragmentLeaveDialogBinding
+    private lateinit var sharedViewModel: SharedBreakScreenNLeaveDialogViewModel
 
 
     override fun onCreateView(
@@ -28,13 +29,13 @@ class LeaveDialog : DialogFragment() {
     ): View? {
         binding = FragmentLeaveDialogBinding.inflate(layoutInflater)
 
-
-        val sharedViewModel = ViewModelProvider(requireActivity())[SharedBreakScreenNLeaveDialogViewModel::class.java]
+        sharedViewModel =
+            ViewModelProvider(requireActivity())[SharedBreakScreenNLeaveDialogViewModel::class.java]
         sharedViewModel.openDialog()
 
         binding.ivConfirm.setOnClickListener {
-             findNavController().navigate(R.id.mainScreenFragment)
             sharedViewModel.closeDialog()
+            findNavController().navigate(R.id.mainScreenFragment)
             dismiss()
         }
         binding.ivDismiss.setOnClickListener {
@@ -75,33 +76,40 @@ class LeaveDialog : DialogFragment() {
     override fun onPause() {
         super.onPause()
         Log.d(TAG, "onPause")
+        sharedViewModel.closeDialog()
         dismiss()
-
     }
 
     override fun onStop() {
         super.onStop()
+        sharedViewModel.closeDialog()
         dismiss()
         Log.d(TAG, "onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        sharedViewModel.closeDialog()
+        dismiss()
         Log.d(TAG, "onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        sharedViewModel.closeDialog()
+        dismiss()
         Log.d(TAG, "onDestroy")
     }
 
     override fun onDetach() {
         super.onDetach()
+        sharedViewModel.closeDialog()
+        dismiss()
         Log.d(TAG, "onDetach")
     }
 
     companion object {
-        private const val TAG = "YourFragment"
+        private const val TAG = "YourFragmentLeaveDialog"
     }
 
 

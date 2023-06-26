@@ -33,7 +33,7 @@ class StudyingScreenFragment : Fragment() {
 
 
         args.timeStudying.let {
-            Log.i("Stuydying screen timeStudying", "${args.timeStudying}")
+            Log.i("Studying screen timeStudying", "${args.timeStudying}")
             // viewModel.setStudyingTimeMutableLiveData(it)
             viewModel.startStudyTimer(args.timeStudying)
         }
@@ -59,7 +59,7 @@ class StudyingScreenFragment : Fragment() {
         binding.ivStop.setOnClickListener {
             it.findNavController().navigate(R.id.leaveDialog)
         }
-
+//TODO поменять
         binding.ivBreak.setOnClickListener {         //1
             if (viewModel.studyingTimeLiveDataLocal.value!! < 0 ) {
                 Toast.makeText(
@@ -98,17 +98,17 @@ class StudyingScreenFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.i("YourFragment", "onDestroyView()")
+        Log.i("YourFragmentStuyd", "onDestroyView()")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i("YourFragment", "onDestroy()")
+        Log.i("YourFragmentStuyd", "onDestroy()")
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.i("YourFragment", "onDetach()")
+        Log.i("YourFragmentStuyd", "onDetach()")
     }
 
 }

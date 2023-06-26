@@ -49,23 +49,25 @@ class BreakScreenFragment : Fragment() {
 
         viewModel.isTimerOnLiveData.observe(this) {
             if (it == false) {
+                val sharedViewModel =
+                    ViewModelProvider(requireActivity())[SharedBreakScreenNLeaveDialogViewModel::class.java]
+
                 val action =
                     BreakScreenFragmentDirections.actionBreakScreenFragmentToStudyingScreenFragment(
                         taskName,
                         timeStudying
                     )
-
-                val sharedViewModel =
-                    ViewModelProvider(requireActivity())[SharedBreakScreenNLeaveDialogViewModel::class.java]
                 sharedViewModel.showDialogIsOpenLiveData.observe(
                     this
                 ) {
+                    //In our case dismisses dialog if it is open
                     if (sharedViewModel.showDialogIsOpenLiveData.value == true) {
-                        findNavController().navigateUp()//dismisses dialog if it is open
+                        findNavController().navigateUp()
                     }
                 }
+                viewModel.stopBreakTimer()
                 findNavController().navigate(action)
-            }
+             }
         }
 
         binding.tvTaskName.text = taskName

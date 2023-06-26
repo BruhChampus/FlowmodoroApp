@@ -33,10 +33,7 @@ class BreakScreenFragmentViewModel : ViewModel() {
 
                 override fun onFinish() {
                     isTimerOn.value = false
-                     countDownTimer = null
-
-
-                }
+                 }
             }
             (countDownTimer as CountDownTimer).start()
             Log.i("BreakTimer", "started")
@@ -48,7 +45,7 @@ class BreakScreenFragmentViewModel : ViewModel() {
 
      fun stopBreakTimer() {
          countDownTimer?.cancel()
-         countDownTimer?.onFinish()
+         countDownTimer = null
      }
 
     private fun updateTimerText(millisUntilFinished: Long): String {
