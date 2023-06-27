@@ -38,6 +38,10 @@
             android:name="task_name"
             app:argType="string"
             android:defaultValue='' />
+        <argument
+            android:name="time_studying"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/breakScreenFragment"
@@ -51,6 +55,15 @@
         <action
             android:id="@+id/action_breakScreenFragment_to_leaveDialog"
             app:destination="@id/leaveDialog" />
+        <argument
+            android:name="task_name"
+            app:argType="string" />
+        <argument
+            android:name="time_studying"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_breakScreenFragment_to_studyingScreenFragment"
+            app:destination="@id/studyingScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/resultsScreenFragment"

@@ -1,39 +1,33 @@
 package com.example.flowmodoroapp
 
-import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.core.app.NotificationCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.flowmodoroapp.databinding.FragmentBreakScreenBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BreakScreenFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BreakScreenFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var binding: FragmentBreakScreenBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentBreakScreenBinding
+    private val args: BreakScreenFragmentArgs by navArgs()
+
+    private var viewModel: BreakScreenFragmentViewModel? = null
+    //private var breakEndNotification = BreakEndNotification(requireContext()) APP CRASESH
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,31 +36,61 @@ class BreakScreenFragment : Fragment() {
         binding = FragmentBreakScreenBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
         binding.ivStop.setOnClickListener {
-            it.findNavController().navigate(R.id.leaveDialog)
+             it.findNavController().navigate(R.id.leaveDialog)
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(R.id.leaveDialog)
         }
+        viewModel = ViewModelProvider(this)[BreakScreenFragmentViewModel::class.java]
+         val timeStudying = args.timeStudying
+        Log.i("BreakScreenFragment timeStudying", " ${args.timeStudying}")
+        val taskName = args.taskName
+        viewModel!!.timeLiveData.observe(this) {
+            binding.tvTimer.text = it
+        }
+        viewModel!!.startBreakTimer(timeStudying)
+
+
+         viewModel!!.isTimerOnLiveData.observe(this) {
+             /**
+              * If time expired than check if dialog is open and navigate*/
+            if (it == false) {
+                val sharedViewModel =
+                    ViewModelProvider(requireActivity())[SharedBreakScreenNLeaveDialogViewModel::class.java]
+
+                //breakEndNotification.createNotificationChannel()
+              //  breakEndNotification.displayNotification()
+
+                val action =
+                    BreakScreenFragmentDirections.actionBreakScreenFragmentToStudyingScreenFragment(
+                        taskName,
+                        timeStudying
+                    )
+                sharedViewModel.showDialogIsOpenLiveData.observe(
+                    this
+                ) {
+                    //In our case dismisses dialog if it is open
+                    if (sharedViewModel.showDialogIsOpenLiveData.value == true) {
+                        findNavController().navigateUp()
+                    }
+                }
+                viewModel!!.stopBreakTimer()
+                findNavController().navigate(action)
+             }
+        }
+
+        binding.tvTaskName.text = taskName
+        binding.tvTimeStudy.text = resources.getString(R.string.time_studying).plus(
+            this.resources.getQuantityString(
+                R.plurals.plulars_minutes,
+                timeStudying,
+                timeStudying
+            )
+        )
         return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BreakScreenFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BreakScreenFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
+
+
 }
