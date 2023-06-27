@@ -1,6 +1,9 @@
 package com.example.flowmodoroapp
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -21,7 +25,7 @@ class StudyingScreenFragment : Fragment() {
 
     private lateinit var binding: FragmentStudyingScreenBinding
     private val args: StudyingScreenFragmentArgs by navArgs()
-    private lateinit var viewModel:StudyingScreenFragmentViewModel
+    private var viewModel: StudyingScreenFragmentViewModel? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -29,39 +33,39 @@ class StudyingScreenFragment : Fragment() {
 
         binding = FragmentStudyingScreenBinding.inflate(layoutInflater)
 
-          viewModel = ViewModelProvider(this)[StudyingScreenFragmentViewModel::class.java]
-
+        viewModel = ViewModelProvider(this)[StudyingScreenFragmentViewModel::class.java]
 
         args.timeStudying.let {
             Log.i("Studying screen timeStudying", "${args.timeStudying}")
             // viewModel.setStudyingTimeMutableLiveData(it)
-            viewModel.startStudyTimer(args.timeStudying)
+            viewModel!!.startStudyTimer(args.timeStudying)
         }
-        args.taskName.let {    binding.tvTaskName.text = it}
+        args.taskName.let { binding.tvTaskName.text = it }
 
         //viewModel.startStudyTimer()
 
-        viewModel.timeLiveData.observe(this) {
+        viewModel!!.timeLiveData.observe(this) {
             binding.tvTimer.text = it
         }
 
-        viewModel.studyingTimeLiveData.observe(this) {
+        viewModel!!.studyingTimeLiveData.observe(this) {
 
-            val studyTimePluralsValue = viewModel.studyingTimeLiveData.value?.let { studyTime ->
+            val studyTimePluralsValue = viewModel!!.studyingTimeLiveData.value?.let { studyTime ->
                 this.resources.getQuantityString(
                     R.plurals.plulars_minutes,
                     studyTime, studyTime
                 )
             }
-             binding.tvTimeStudy.text = resources.getString(R.string.youre_studying).plus(studyTimePluralsValue)
+            binding.tvTimeStudy.text =
+                resources.getString(R.string.youre_studying).plus(studyTimePluralsValue)
         }
 
         binding.ivStop.setOnClickListener {
             it.findNavController().navigate(R.id.leaveDialog)
         }
-//TODO поменять
+//TODO раскоментить
         binding.ivBreak.setOnClickListener {         //1
-            if (viewModel.studyingTimeLiveDataLocal.value!! < 0 ) {
+            if (viewModel!!.studyingTimeLiveDataLocal.value!! < 0) {
                 Toast.makeText(
                     requireContext(),
                     "Atleast 1 minute needs to pass",
@@ -72,9 +76,9 @@ class StudyingScreenFragment : Fragment() {
                     StudyingScreenFragmentDirections.actionStudyingScreenFragmentToBreakScreenFragment(
                         binding.tvTaskName.text.toString(),
                         //viewModel.studyingTimeLiveData.value?:1
-                    1
+                        1
                     )
-                viewModel.stopStudyTimer()
+                viewModel!!.stopStudyTimer()
                 it.findNavController().navigate(action)
             }
         }
@@ -83,7 +87,6 @@ class StudyingScreenFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(R.id.leaveDialog)
         }
-
 
 
         // Inflate the layout for this fragment
@@ -96,6 +99,9 @@ class StudyingScreenFragment : Fragment() {
 //        viewModel.stopStudyTimer()
 //    }
 
+
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         Log.i("YourFragmentStuyd", "onDestroyView()")
@@ -104,11 +110,8 @@ class StudyingScreenFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         Log.i("YourFragmentStuyd", "onDestroy()")
+
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        Log.i("YourFragmentStuyd", "onDetach()")
-    }
 
 }

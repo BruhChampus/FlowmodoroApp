@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 import java.util.Timer
@@ -21,11 +22,10 @@ class StudyingScreenFragmentViewModel : ViewModel() {
         get() = timeMutableLiveData
 
 
-            /**Stores  total time user is studying*/
+    /**Stores  total time user is studying*/
     private var studyingTimeMutableLiveData = MutableLiveData<Int>()
     val studyingTimeLiveData: LiveData<Int>
         get() = studyingTimeMutableLiveData
-
 
 
     /**
@@ -37,64 +37,30 @@ class StudyingScreenFragmentViewModel : ViewModel() {
         get() = studyingTimeMutableLiveDataLocal
 
 
-    private var timer: Timer? = null
-
 //TODO сделать нотификации со звуком, которые будут приходить когда закончился перерыв
 //TODO сделать нотификацию которая будет показівать сколько времени прошло
 
-     //TODO onDestroyView не подошел, найти другой метод останавливать таймеры
+    //TODO onDestroyView не подошел, найти другой метод останавливать таймеры
     //TODO сделать что свайпом можно удалять елементы из бд
-    fun startStudyTimer(a: Int) {
-        if (timer == null) {
-            var minutesStudying: Int = a
-            studyingTimeMutableLiveData.value = minutesStudying
+    private var studyTimer: StudyTimer = StudyTimer(
+        timeMutableLiveData = timeMutableLiveData,
+        studyingTimeMutableLiveData = studyingTimeMutableLiveData,
+        studyingTimeMutableLiveDataLocal = studyingTimeMutableLiveDataLocal,
+        coroutineScope = CoroutineScope(Dispatchers.Main)
+    )
 
-            var minutesMustPass = 1
-
-            timer = Timer()
-            val startTime = System.currentTimeMillis()
-            timer?.scheduleAtFixedRate(object : TimerTask() {
-                override fun run() {
-                    val currentTime = System.currentTimeMillis()
-                    val elapsedTime = (currentTime - startTime)
-                    CoroutineScope(Dispatchers.Main).launch {
-                        timeMutableLiveData.value = updateTimerText(elapsedTime)
-                    }
-
-                    val minutesPassed = elapsedTime / (1000 * 60)
-
-                    if (minutesPassed >= minutesMustPass) {
-                        CoroutineScope(Dispatchers.Main).launch { studyingTimeMutableLiveDataLocal.value = minutesPassed.toInt() }
-
-                        minutesMustPass++
-                        minutesStudying++
-
-                        CoroutineScope(Dispatchers.Main).launch {
-                            studyingTimeMutableLiveData.value = minutesStudying
-                        }
-                    }
-                }
-            }, 0, 1000)
-        }
+    fun startStudyTimer(minutesStudying: Int) {
+        studyTimer.startStudyTimer(minutesStudying)
     }
 
 
     fun stopStudyTimer() {
-        timer?.cancel()
-        timer = null
+        studyTimer.stopStudyTimer()
     }
 
     override fun onCleared() {
         super.onCleared()
         Log.i("OnCleared", "ViewMOdel is cleared")
-    }
-
-
-    //Formating time value to normal view
-    private fun updateTimerText(millisUntilFinished: Long): String {
-        val minutes = (millisUntilFinished / 1000) / 60
-        val seconds = (millisUntilFinished / 1000) % 60
-        return String.format("%02d:%02d", minutes, seconds)
     }
 
 

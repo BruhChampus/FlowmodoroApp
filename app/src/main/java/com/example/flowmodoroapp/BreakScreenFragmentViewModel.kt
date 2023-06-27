@@ -12,47 +12,26 @@ class BreakScreenFragmentViewModel : ViewModel() {
         get() = timeMutableLiveData
 
 
-    private var isTimerOn = MutableLiveData<Boolean>(true)
+    private var isTimerOn = MutableLiveData<Boolean>()
     val isTimerOnLiveData: LiveData<Boolean>
         get() = isTimerOn
 
 
-
-    private var countDownTimer: CountDownTimer? = null
+    private val breakTimer = BreakTimer(
+        timeMutableLiveData = timeMutableLiveData,
+        isTimerOn = isTimerOn
+    )
 
     fun startBreakTimer(minutes: Int) {
-        if (countDownTimer == null) {
-            val millisInFuture:Long = ((minutes.toLong()*60_000)/5)
-            Log.i("Break", "$millisInFuture")
-            countDownTimer = object : CountDownTimer(millisInFuture, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                   timeMutableLiveData.value = updateTimerText(millisUntilFinished)
-                    Log.i("BreakTimer", "ticking")
-
-                }
-
-                override fun onFinish() {
-                    isTimerOn.value = false
-                 }
-            }
-            (countDownTimer as CountDownTimer).start()
-            Log.i("BreakTimer", "started")
-        }
-        Log.i("BreakTimer", "not null")
+        breakTimer.startBreakTimer(minutes)
 
     }
 
 
-     fun stopBreakTimer() {
-         countDownTimer?.cancel()
-         countDownTimer = null
-     }
-
-    private fun updateTimerText(millisUntilFinished: Long): String {
-        val minutes = (millisUntilFinished / 1000) / 60
-        val seconds = (millisUntilFinished / 1000) % 60
-        return String.format("%02d:%02d", minutes, seconds)
+    fun stopBreakTimer() {
+        breakTimer.stopBreakTimer()
     }
+
 
 
 }

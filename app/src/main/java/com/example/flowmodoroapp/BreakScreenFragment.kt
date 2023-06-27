@@ -1,19 +1,23 @@
 package com.example.flowmodoroapp
 
-import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.flowmodoroapp.databinding.FragmentBreakScreenBinding
-import kotlinx.coroutines.delay
 
 
 class BreakScreenFragment : Fragment() {
@@ -21,7 +25,8 @@ class BreakScreenFragment : Fragment() {
     private lateinit var binding: FragmentBreakScreenBinding
     private val args: BreakScreenFragmentArgs by navArgs()
 
-    private lateinit var viewModel: BreakScreenFragmentViewModel
+    private var viewModel: BreakScreenFragmentViewModel? = null
+    //private var breakEndNotification = BreakEndNotification(requireContext()) APP CRASESH
 
 
     override fun onCreateView(
@@ -31,26 +36,30 @@ class BreakScreenFragment : Fragment() {
         binding = FragmentBreakScreenBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
         binding.ivStop.setOnClickListener {
-            it.findNavController().navigate(R.id.leaveDialog)
+             it.findNavController().navigate(R.id.leaveDialog)
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-
             findNavController().navigate(R.id.leaveDialog)
         }
         viewModel = ViewModelProvider(this)[BreakScreenFragmentViewModel::class.java]
-
-        val timeStudying = args.timeStudying
+         val timeStudying = args.timeStudying
         Log.i("BreakScreenFragment timeStudying", " ${args.timeStudying}")
         val taskName = args.taskName
-        viewModel.timeLiveData.observe(this) {
+        viewModel!!.timeLiveData.observe(this) {
             binding.tvTimer.text = it
         }
-        viewModel.startBreakTimer(timeStudying)
+        viewModel!!.startBreakTimer(timeStudying)
 
-        viewModel.isTimerOnLiveData.observe(this) {
+
+         viewModel!!.isTimerOnLiveData.observe(this) {
+             /**
+              * If time expired than check if dialog is open and navigate*/
             if (it == false) {
                 val sharedViewModel =
                     ViewModelProvider(requireActivity())[SharedBreakScreenNLeaveDialogViewModel::class.java]
+
+                //breakEndNotification.createNotificationChannel()
+              //  breakEndNotification.displayNotification()
 
                 val action =
                     BreakScreenFragmentDirections.actionBreakScreenFragmentToStudyingScreenFragment(
@@ -65,7 +74,7 @@ class BreakScreenFragment : Fragment() {
                         findNavController().navigateUp()
                     }
                 }
-                viewModel.stopBreakTimer()
+                viewModel!!.stopBreakTimer()
                 findNavController().navigate(action)
              }
         }
@@ -80,6 +89,8 @@ class BreakScreenFragment : Fragment() {
         )
         return binding.root
     }
+
+
 
 
 }
