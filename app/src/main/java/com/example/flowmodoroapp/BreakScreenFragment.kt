@@ -3,6 +3,7 @@ package com.example.flowmodoroapp
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -14,10 +15,14 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.flowmodoroapp.databinding.FragmentBreakScreenBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class BreakScreenFragment : Fragment() {
@@ -26,7 +31,7 @@ class BreakScreenFragment : Fragment() {
     private val args: BreakScreenFragmentArgs by navArgs()
 
     private var viewModel: BreakScreenFragmentViewModel? = null
-    private lateinit var breakEndNotification:BreakEndNotification
+    private lateinit var breakEndNotification: BreakEndNotification
 
 
     override fun onCreateView(
@@ -34,32 +39,36 @@ class BreakScreenFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentBreakScreenBinding.inflate(layoutInflater)
+        viewModel = ViewModelProvider(this)[BreakScreenFragmentViewModel::class.java]
+        val timeStudying = args.timeStudying
+        val taskName = args.taskName
+        binding.tvTaskName.text = taskName
+        binding.tvTimeStudy.text = resources.getString(R.string.time_studying).plus(
+            this.resources.getQuantityString(
+                R.plurals.plulars_minutes,
+                timeStudying,
+                timeStudying
+            )
+        )
+
         // Inflate the layout for this fragment
         binding.ivStop.setOnClickListener {
-             it.findNavController().navigate(R.id.leaveDialog)
+            it.findNavController().navigate(R.id.leaveDialog)
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(R.id.leaveDialog)
         }
-        viewModel = ViewModelProvider(this)[BreakScreenFragmentViewModel::class.java]
-         val timeStudying = args.timeStudying
-        Log.i("BreakScreenFragment timeStudying", " ${args.timeStudying}")
-        val taskName = args.taskName
+
         viewModel!!.timeLiveData.observe(this) {
             binding.tvTimer.text = it
         }
-        viewModel!!.startBreakTimer(timeStudying)
 
-
-         viewModel!!.isTimerOnLiveData.observe(this) {
-             /**
-              * If time expired than check if dialog is open and navigate*/
+        viewModel!!.isTimerOnLiveData.observe(this) {
+            /**
+             * If time expired than check if dialog is open and navigate*/
             if (it == false) {
                 val sharedViewModel =
                     ViewModelProvider(requireActivity())[SharedBreakScreenNLeaveDialogViewModel::class.java]
-                breakEndNotification = BreakEndNotification(requireContext())
-                breakEndNotification.createNotificationChannel()
-                breakEndNotification.displayNotification()
 
                 val action =
                     BreakScreenFragmentDirections.actionBreakScreenFragmentToStudyingScreenFragment(
@@ -76,21 +85,13 @@ class BreakScreenFragment : Fragment() {
                 }
                 viewModel!!.stopBreakTimer()
                 findNavController().navigate(action)
-             }
+            }
         }
 
-        binding.tvTaskName.text = taskName
-        binding.tvTimeStudy.text = resources.getString(R.string.time_studying).plus(
-            this.resources.getQuantityString(
-                R.plurals.plulars_minutes,
-                timeStudying,
-                timeStudying
-            )
-        )
+        viewModel!!.startBreakTimer(timeStudying, requireContext())
+
         return binding.root
     }
-
-
 
 
 }

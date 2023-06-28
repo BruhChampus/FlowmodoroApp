@@ -1,5 +1,7 @@
 package com.example.flowmodoroapp
 
+import android.content.Context
+import android.content.Intent
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +11,7 @@ class BreakTimer(
     val isTimerOn: MutableLiveData<Boolean>) {
         private var countDownTimer: CountDownTimer? = null
 
-        fun startBreakTimer(minutes: Int) {
+        fun startBreakTimer(minutes: Int, context: Context) {
             isTimerOn.value = true
             if (countDownTimer == null) {
                 val millisInFuture: Long = ((minutes.toLong() * 60_000) / 5)
@@ -24,6 +26,9 @@ class BreakTimer(
                     override fun onFinish() {
                         isTimerOn.value = false
                         stopBreakTimer()
+                        val breakEndNotification = BreakEndNotification(context)
+                        breakEndNotification.createNotificationChannel()
+                        breakEndNotification.displayNotification()
                     }
                 }
                 (countDownTimer as CountDownTimer).start()
