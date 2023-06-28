@@ -26,7 +26,7 @@ class BreakScreenFragment : Fragment() {
     private val args: BreakScreenFragmentArgs by navArgs()
 
     private var viewModel: BreakScreenFragmentViewModel? = null
-    //private var breakEndNotification = BreakEndNotification(requireContext()) APP CRASESH
+    private lateinit var breakEndNotification:BreakEndNotification
 
 
     override fun onCreateView(
@@ -57,9 +57,9 @@ class BreakScreenFragment : Fragment() {
             if (it == false) {
                 val sharedViewModel =
                     ViewModelProvider(requireActivity())[SharedBreakScreenNLeaveDialogViewModel::class.java]
-
-                //breakEndNotification.createNotificationChannel()
-              //  breakEndNotification.displayNotification()
+                breakEndNotification = BreakEndNotification(requireContext())
+                breakEndNotification.createNotificationChannel()
+                breakEndNotification.displayNotification()
 
                 val action =
                     BreakScreenFragmentDirections.actionBreakScreenFragmentToStudyingScreenFragment(
