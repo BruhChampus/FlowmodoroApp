@@ -1,5 +1,6 @@
 package com.example.flowmodoroapp
 
+import android.content.Context
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -22,8 +23,8 @@ class BreakScreenFragmentViewModel : ViewModel() {
         isTimerOn = isTimerOn
     )
 
-    fun startBreakTimer(minutes: Int) {
-        breakTimer.startBreakTimer(minutes)
+    fun startBreakTimer(minutes: Int, context: Context) {
+        breakTimer.startBreakTimer(minutes, context)
 
     }
 

@@ -19,11 +19,11 @@ class BreakEndNotification(val context: Context) {
         }
     }
 
-     fun displayNotification() {
+     fun displayNotification(msg:String = "Break is over") {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Flowmodoro")
-            .setContentText("Break is over")
+            .setContentText(msg)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val notificationManager =

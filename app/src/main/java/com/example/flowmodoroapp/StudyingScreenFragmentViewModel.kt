@@ -37,10 +37,8 @@ class StudyingScreenFragmentViewModel : ViewModel() {
         get() = studyingTimeMutableLiveDataLocal
 
 
-//TODO сделать нотификации со звуком, которые будут приходить когда закончился перерыв
-//TODO сделать нотификацию которая будет показівать сколько времени прошло
 
-    //TODO onDestroyView не подошел, найти другой метод останавливать таймеры
+    //TODO Все таки попробовать в onDestroyView останавливать таймер только придумать как сохранять состояние
     //TODO сделать что свайпом можно удалять елементы из бд
     private var studyTimer: StudyTimer = StudyTimer(
         timeMutableLiveData = timeMutableLiveData,
