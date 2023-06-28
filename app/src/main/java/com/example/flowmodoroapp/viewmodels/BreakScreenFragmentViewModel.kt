@@ -1,11 +1,10 @@
-package com.example.flowmodoroapp
+package com.example.flowmodoroapp.viewmodels
 
 import android.content.Context
-import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.flowmodoroapp.BreakTimer
 
 class BreakScreenFragmentViewModel : ViewModel() {
     private var timeMutableLiveData = MutableLiveData<String>()

@@ -1,7 +1,6 @@
-package com.example.flowmodoroapp
+package com.example.flowmodoroapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,8 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.example.flowmodoroapp.MainScreenFragmentDirections
+import com.example.flowmodoroapp.R
 import com.example.flowmodoroapp.databinding.FragmentMainScreenBinding
 
 class MainScreenFragment : Fragment() {

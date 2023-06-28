@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainScreenFragment"
-        android:name="com.example.flowmodoroapp.MainScreenFragment"
+        android:name="com.example.flowmodoroapp.fragments.MainScreenFragment"
         android:label="fragment_main_screen"
         tools:layout="@layout/fragment_main_screen">
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/studyingScreenFragment"
-        android:name="com.example.flowmodoroapp.StudyingScreenFragment"
+        android:name="com.example.flowmodoroapp.fragments.StudyingScreenFragment"
         android:label="StudyingScreenFragment">
         <action
             android:id="@+id/action_studyingScreenFragment_to_breakScreenFragment"
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/breakScreenFragment"
-        android:name="com.example.flowmodoroapp.BreakScreenFragment"
+        android:name="com.example.flowmodoroapp.fragments.BreakScreenFragment"
         android:label="fragment_break_screen"
         tools:layout="@layout/fragment_break_screen">
         <action
@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/resultsScreenFragment"
-        android:name="com.example.flowmodoroapp.ResultsScreenFragment"
+        android:name="com.example.flowmodoroapp.fragments.ResultsScreenFragment"
         android:label="ResultsScreenFragment">
         <action
             android:id="@+id/action_resultsScreenFragment_to_settingsFragment"
@@ -75,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.flowmodoroapp.SettingsFragment"
+        android:name="com.example.flowmodoroapp.fragments.SettingsFragment"
         android:label="SettingsFragment">
         <action
             android:id="@+id/action_settingsFragment_to_resultsScreenFragment"
@@ -83,6 +83,6 @@
     </fragment>
     <dialog
         android:id="@+id/leaveDialog"
-        android:name="com.example.flowmodoroapp.LeaveDialog"
+        android:name="com.example.flowmodoroapp.fragments.LeaveDialogFragment"
         android:label="LeaveDialog" />
 </navigation>
