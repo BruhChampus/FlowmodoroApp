@@ -49,7 +49,7 @@ class BreakScreenFragmentViewModel( private val repository: SessionRepository) :
     }
 
    suspend fun insertSession(session: Session) {
-       viewModelScope.launch(Dispatchers.IO) { repository.insertSession(session) }
+    repository.insertSession(session)
    }
 
 
