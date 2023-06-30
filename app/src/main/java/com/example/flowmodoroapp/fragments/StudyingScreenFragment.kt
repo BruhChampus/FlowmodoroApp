@@ -8,23 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.flowmodoroapp.R
+import com.example.flowmodoroapp.data.Session
 
 import com.example.flowmodoroapp.viewmodels.StudyingScreenFragmentViewModel
 import com.example.flowmodoroapp.databinding.FragmentStudyingScreenBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class StudyingScreenFragment : Fragment() {
 
     private lateinit var binding: FragmentStudyingScreenBinding
     private val args: StudyingScreenFragmentArgs by navArgs()
-    private var viewModel: StudyingScreenFragmentViewModel? = null
+    //private var viewModel: StudyingScreenFragmentViewModel? = null
+    private val viewModel: StudyingScreenFragmentViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -32,7 +36,10 @@ class StudyingScreenFragment : Fragment() {
 
         binding = FragmentStudyingScreenBinding.inflate(layoutInflater)
 
-        viewModel = ViewModelProvider(this)[StudyingScreenFragmentViewModel::class.java]
+//        val dao = FlowmodoroDB.getInstance(requireContext()).flowmodoroDao
+//        val repository = SessionRepository(dao)
+//        val factory = StudyingScreenFragmentViewModelFactory(repository)
+     //   viewModel = ViewModelProvider(this, factory)[StudyingScreenFragmentViewModel::class.java]
 
         args.timeStudying.let {
             Log.i("Studying screen timeStudying", "${args.timeStudying}")
@@ -93,8 +100,12 @@ class StudyingScreenFragment : Fragment() {
             val result = bundle.getBoolean("isConfirmPressed")
             if(result){
                viewModel!!.stopStudyTimer()
-                //INSERT INTO DB
-                viewModel = null
+                val session = Session(
+                    date = viewModel.getCurrentDate(),
+                    taskName = binding.tvTaskName.text.toString(),
+                    minutes = binding.tvTimeStudy.text.toString()
+                )
+                lifecycleScope.launch(Dispatchers.IO) {viewModel.insertSession(session)}
                 findNavController().navigate(R.id.mainScreenFragment)
             }
         }

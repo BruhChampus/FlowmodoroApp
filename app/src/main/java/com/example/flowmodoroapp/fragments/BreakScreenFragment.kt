@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,6 +17,10 @@ import com.example.flowmodoroapp.R
 import com.example.flowmodoroapp.data.Session
 import com.example.flowmodoroapp.viewmodels.SharedBreakScreenNLeaveDialogViewModel
 import com.example.flowmodoroapp.databinding.FragmentBreakScreenBinding
+import com.example.flowmodoroapp.viewmodels.StudyingScreenFragmentViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class BreakScreenFragment : Fragment() {
@@ -23,7 +28,8 @@ class BreakScreenFragment : Fragment() {
     private lateinit var binding: FragmentBreakScreenBinding
     private val args: BreakScreenFragmentArgs by navArgs()
 
-    private var viewModel: BreakScreenFragmentViewModel? = null
+  //  private var viewModel: BreakScreenFragmentViewModel? = null
+    private val viewModel: BreakScreenFragmentViewModel by viewModel()
 
 
     override fun onCreateView(
@@ -31,7 +37,7 @@ class BreakScreenFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentBreakScreenBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[BreakScreenFragmentViewModel::class.java]
+      //  viewModel = ViewModelProvider(this)[BreakScreenFragmentViewModel::class.java]
         val timeStudying = args.timeStudying
         val taskName = args.taskName
         binding.tvTaskName.text = taskName
@@ -86,17 +92,18 @@ class BreakScreenFragment : Fragment() {
         setFragmentResultListener("isConfirmPressed") { _, bundle ->
             val result = bundle.getBoolean("isConfirmPressed")
             if (result) {
-                viewModel!!.stopBreakTimer()
-                //INSERT INTO DB
-                viewModel = null
+                viewModel.stopBreakTimer()
+                val session = Session(
+                    date = viewModel.getCurrentDate(),
+                    taskName = binding.tvTaskName.text.toString(),
+                    minutes = binding.tvTimeStudy.text.toString()
+                )
+                lifecycleScope.launch(Dispatchers.IO) {viewModel.insertSession(session)}
                 findNavController().navigate(R.id.mainScreenFragment)
             }
         }
-        val session = Session(
-            date = viewModel!!.getCurrentDate(),
-            taskName = binding.tvTaskName.text.toString(),
-            minutes = binding.tvTimeStudy.text.toString()
-        )
+
+
         return binding.root
     }
 

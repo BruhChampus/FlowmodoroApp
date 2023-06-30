@@ -5,12 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.flowmodoroapp.StudyTimer
+import com.example.flowmodoroapp.data.Session
+import com.example.flowmodoroapp.data.SessionRepository
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import java.util.*
 
 
-class StudyingScreenFragmentViewModel : ViewModel() {
+class StudyingScreenFragmentViewModel(private val repository: SessionRepository) : ViewModel() {
 
     /**Stores a formatted time value (digits that is inside timer)*/
     private var timeMutableLiveData = MutableLiveData<String>()
@@ -55,6 +58,17 @@ class StudyingScreenFragmentViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         Log.i("OnCleared", "ViewMOdel is cleared")
+    }
+
+    fun getCurrentDate(): String {
+        val year = Calendar.YEAR
+        val month = Calendar.WEEK_OF_MONTH
+        val day = Calendar.DAY_OF_MONTH
+        return String.format("DD.MM.YYYY", day, month, year)
+    }
+
+    suspend fun insertSession(session: Session){
+        repository.insertSession(session)
     }
 
 
