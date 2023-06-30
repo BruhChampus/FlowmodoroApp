@@ -14,6 +14,7 @@ import com.example.flowmodoroapp.BreakScreenFragmentArgs
 import com.example.flowmodoroapp.BreakScreenFragmentDirections
 import com.example.flowmodoroapp.viewmodels.BreakScreenFragmentViewModel
 import com.example.flowmodoroapp.R
+import com.example.flowmodoroapp.data.Session
 import com.example.flowmodoroapp.viewmodels.SharedBreakScreenNLeaveDialogViewModel
 import com.example.flowmodoroapp.databinding.FragmentBreakScreenBinding
 
@@ -82,6 +83,11 @@ class BreakScreenFragment : Fragment() {
 
         viewModel!!.startBreakTimer(timeStudying, requireContext())
 
+        val session = Session(
+            date = viewModel!!.getCurrentDate(),
+            taskName = binding.tvTaskName.text.toString(),
+            minutes = binding.tvTimeStudy.text.toString()
+        )
         return binding.root
     }
 
