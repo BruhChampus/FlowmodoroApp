@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FlowmodoroDAO {
     @Insert
-    suspend fun insertSession(session: Session):Flow<Session>
+    suspend fun insertSession(session: Session)
 
     @Delete
     suspend fun deleteSession(session: Session)

@@ -13,8 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-class BreakScreenFragmentViewModel(private val repository: SessionRepository) : ViewModel() {
-    val session = repository.getSessions()
+//private val repository: SessionRepository в конструктор
+class BreakScreenFragmentViewModel( ) : ViewModel() {
+   // val session = repository.getSessions()
     private var timeMutableLiveData = MutableLiveData<String>()
     val timeLiveData: LiveData<String>
         get() = timeMutableLiveData
@@ -47,9 +48,9 @@ class BreakScreenFragmentViewModel(private val repository: SessionRepository) : 
         return String.format("DD.MM.YYYY", day, month, year)
     }
 
-    suspend fun insertSession(session: Session) {
-        viewModelScope.launch(Dispatchers.IO) { repository.insertSession(session) }
-    }
+//    suspend fun insertSession(session: Session) {
+//        viewModelScope.launch(Dispatchers.IO) { repository.insertSession(session) }
+//    }
 
 
 }

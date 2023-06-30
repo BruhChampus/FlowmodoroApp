@@ -6,7 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.flowmodoroapp.R
@@ -32,11 +35,13 @@ class LeaveDialogFragment : DialogFragment() {
 
         binding.ivConfirm.setOnClickListener {
             sharedViewModel.closeDialog()
-            findNavController().navigate(R.id.mainScreenFragment)
-            dismiss()
+            //pass to the fragment that the confirm button was pressed
+            setFragmentResult("isConfirmPressed", bundleOf("isConfirmPressed" to true))
+             dismiss()
         }
         binding.ivDismiss.setOnClickListener {
             sharedViewModel.closeDialog()
+            setFragmentResult("isConfirmPressed", bundleOf("isConfirmPressed" to false))
             dismiss()
         }
 

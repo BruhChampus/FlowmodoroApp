@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.flowmodoroapp.BreakScreenFragmentArgs
-import com.example.flowmodoroapp.BreakScreenFragmentDirections
 import com.example.flowmodoroapp.viewmodels.BreakScreenFragmentViewModel
 import com.example.flowmodoroapp.R
 import com.example.flowmodoroapp.data.Session
@@ -83,6 +82,16 @@ class BreakScreenFragment : Fragment() {
 
         viewModel!!.startBreakTimer(timeStudying, requireContext())
 
+        //Listener to check if ConfirmButton was pressed in leaveDialog
+        setFragmentResultListener("isConfirmPressed") { _, bundle ->
+            val result = bundle.getBoolean("isConfirmPressed")
+            if (result) {
+                viewModel!!.stopBreakTimer()
+                //INSERT INTO DB
+                viewModel = null
+                findNavController().navigate(R.id.mainScreenFragment)
+            }
+        }
         val session = Session(
             date = viewModel!!.getCurrentDate(),
             taskName = binding.tvTaskName.text.toString(),

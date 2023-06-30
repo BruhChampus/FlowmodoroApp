@@ -8,13 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.flowmodoroapp.R
-import com.example.flowmodoroapp.StudyingScreenFragmentArgs
-import com.example.flowmodoroapp.StudyingScreenFragmentDirections
+
 import com.example.flowmodoroapp.viewmodels.StudyingScreenFragmentViewModel
 import com.example.flowmodoroapp.databinding.FragmentStudyingScreenBinding
 
@@ -87,6 +88,17 @@ class StudyingScreenFragment : Fragment() {
         }
 
 
+        //Listener to check if ConfirmButton was pressed in leaveDialog
+        setFragmentResultListener("isConfirmPressed") { _, bundle ->
+            val result = bundle.getBoolean("isConfirmPressed")
+            if(result){
+               viewModel!!.stopStudyTimer()
+                //INSERT INTO DB
+                viewModel = null
+                findNavController().navigate(R.id.mainScreenFragment)
+            }
+        }
+
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -96,8 +108,6 @@ class StudyingScreenFragment : Fragment() {
 //        super.onDestroyView()
 //        viewModel.stopStudyTimer()
 //    }
-
-
 
 
     override fun onDestroyView() {

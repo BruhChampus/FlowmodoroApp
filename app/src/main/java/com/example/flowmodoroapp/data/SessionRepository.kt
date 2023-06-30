@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.Flow
 
 class SessionRepository(private val dao: FlowmodoroDAO) {
 
-    suspend fun insertSession(session: Session): Flow<Session> {
-        return dao.insertSession(session)
+    suspend fun insertSession(session: Session)  {
+        dao.insertSession(session)
     }
 
     suspend fun deleteSession(session: Session) {
