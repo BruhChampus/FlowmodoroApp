@@ -5,12 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.flowmodoroapp.StudyTimer
+import com.example.flowmodoroapp.data.SessionRepository
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
 
-class StudyingScreenFragmentViewModel : ViewModel() {
+class StudyingScreenFragmentViewModel(private val repository: SessionRepository) : ViewModel() {
 
     /**Stores a formatted time value (digits that is inside timer)*/
     private var timeMutableLiveData = MutableLiveData<String>()

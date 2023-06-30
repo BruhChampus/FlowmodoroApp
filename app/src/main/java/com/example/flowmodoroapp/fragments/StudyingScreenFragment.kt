@@ -15,9 +15,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.flowmodoroapp.R
+import com.example.flowmodoroapp.data.FlowmodoroDB
+import com.example.flowmodoroapp.data.SessionRepository
 
 import com.example.flowmodoroapp.viewmodels.StudyingScreenFragmentViewModel
 import com.example.flowmodoroapp.databinding.FragmentStudyingScreenBinding
+import com.example.flowmodoroapp.viewmodels.StudyingScreenFragmentViewModelFactory
 
 
 class StudyingScreenFragment : Fragment() {
@@ -32,7 +35,10 @@ class StudyingScreenFragment : Fragment() {
 
         binding = FragmentStudyingScreenBinding.inflate(layoutInflater)
 
-        viewModel = ViewModelProvider(this)[StudyingScreenFragmentViewModel::class.java]
+        val dao = FlowmodoroDB.getInstance(requireContext()).flowmodoroDao
+        val repository = SessionRepository(dao)
+        val factory = StudyingScreenFragmentViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory)[StudyingScreenFragmentViewModel::class.java]
 
         args.timeStudying.let {
             Log.i("Studying screen timeStudying", "${args.timeStudying}")
