@@ -2,7 +2,6 @@ package com.example.flowmodoroapp
 
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -16,8 +15,8 @@ class StudyTimer(
 
     fun startStudyTimer(minutesStudying: Int) {
         if (timer == null) {
-            var minutesStudying: Int = minutesStudying
-            studyingTimeMutableLiveData.value = minutesStudying
+            var minutesStudyingOverAll: Int = minutesStudying
+            studyingTimeMutableLiveData.value = minutesStudyingOverAll
 
             var minutesMustPass = 1
 
@@ -39,10 +38,10 @@ class StudyTimer(
                         }
 
                         minutesMustPass++
-                        minutesStudying++
+                        minutesStudyingOverAll++
 
                         coroutineScope.launch {
-                            studyingTimeMutableLiveData.value = minutesStudying
+                            studyingTimeMutableLiveData.value = minutesStudyingOverAll
                         }
                     }
                 }
