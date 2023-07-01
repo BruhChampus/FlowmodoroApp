@@ -53,12 +53,9 @@ class ResultsScreenFragment : Fragment() {
 
         return binding.root
     }
-//Короче доделаешь
 
     fun initRecyclerView(sessionsList:ArrayList<Session>) {
         binding.rvSessionsList.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = SessionsRecyclerViewAdapter(sessionsList)
-        binding.rvSessionsList.adapter = adapter
         if(sessionsList.isEmpty()){
             binding.rvSessionsList.visibility = View.GONE
             binding.tvNoDataYet.visibility = View.VISIBLE
@@ -67,11 +64,15 @@ class ResultsScreenFragment : Fragment() {
             binding.tvNoDataYet.visibility = View.GONE
         }
 
+        val adapter = SessionsRecyclerViewAdapter(sessionsList)
+        binding.rvSessionsList.adapter = adapter
+
         val simpleItemTouchHelper = SwipeToDelete().createSimpleItemTouchHelper(
             lifecycleScope,
             flowmodoroDAO,
             sessionsList,
-            adapter
+            adapter,
+            binding.rvSessionsList
         )
 
         ItemTouchHelper(

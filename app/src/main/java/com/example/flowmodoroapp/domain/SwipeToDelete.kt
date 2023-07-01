@@ -1,22 +1,25 @@
 package com.example.flowmodoroapp.domain
 
-import android.content.Context
-import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
+import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flowmodoroapp.SessionsRecyclerViewAdapter
 import com.example.flowmodoroapp.data.FlowmodoroDAO
 import com.example.flowmodoroapp.data.Session
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SwipeToDelete() {
+
     fun createSimpleItemTouchHelper(
         coroutineScope: CoroutineScope,
         flowmodoroDao: FlowmodoroDAO,
         sessionsList: ArrayList<Session>,
-        adapter: SessionsRecyclerViewAdapter
+        adapter: SessionsRecyclerViewAdapter,
+        view: View,
     ): ItemTouchHelper.SimpleCallback {
         val simpleItemTouchCallback: ItemTouchHelper.SimpleCallback = object :
             ItemTouchHelper.SimpleCallback(
@@ -34,11 +37,20 @@ class SwipeToDelete() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 //Remove swiped item from list and notify the RecyclerView
                 val position = viewHolder.adapterPosition
-                coroutineScope.launch { flowmodoroDao.deleteSession(sessionsList[position]) }
+
+                coroutineScope.launch {
+                    flowmodoroDao.deleteSession(sessionsList[position])
+                }
                 sessionsList.removeAt(position)
                 adapter.notifyItemRemoved(position)
-             }
+                SnackbarAfterItemDeletion().createSnackbar(
+                    view,
+                    coroutineScope
+                )
+            }
         }
         return simpleItemTouchCallback
     }
+
+
 }
