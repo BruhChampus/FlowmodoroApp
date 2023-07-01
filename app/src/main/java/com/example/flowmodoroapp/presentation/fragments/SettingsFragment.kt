@@ -13,9 +13,6 @@ import com.example.flowmodoroapp.databinding.FragmentSettingsBinding
 class SettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,

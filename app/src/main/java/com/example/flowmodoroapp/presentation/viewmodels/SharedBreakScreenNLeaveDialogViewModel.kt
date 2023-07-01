@@ -1,6 +1,5 @@
-package com.example.flowmodoroapp.viewmodels
+package com.example.flowmodoroapp.presentation.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,11 +14,9 @@ class SharedBreakScreenNLeaveDialogViewModel:ViewModel() {
         get() = showDialogIsOpenMutableLiveData
 
 
-
     fun closeDialog(){
         showDialogIsOpenMutableLiveData.value = false
     }
-
 
     fun openDialog(){
         showDialogIsOpenMutableLiveData.value = true

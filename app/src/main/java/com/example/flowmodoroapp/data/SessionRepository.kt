@@ -1,6 +1,5 @@
 package com.example.flowmodoroapp.data
 
-import androidx.lifecycle.LiveData
 import kotlinx.coroutines.flow.Flow
 
 class SessionRepository(private val dao: FlowmodoroDAO) {
@@ -13,7 +12,7 @@ class SessionRepository(private val dao: FlowmodoroDAO) {
         return dao.deleteSession(session)
     }
 
-    fun getSessions(): Flow<List<Session>> {
+    fun getAllSessions(): Flow<List<Session>> {
         return dao.getAllSessions()
     }
 }

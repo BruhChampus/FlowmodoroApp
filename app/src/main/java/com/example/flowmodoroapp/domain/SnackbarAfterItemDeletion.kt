@@ -1,14 +1,10 @@
 package com.example.flowmodoroapp.domain
 
 import android.view.View
-import android.widget.Toast
-import com.example.flowmodoroapp.SessionsRecyclerViewAdapter
-import com.example.flowmodoroapp.data.FlowmodoroDAO
-import com.example.flowmodoroapp.data.Session
+
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
+ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SnackbarAfterItemDeletion {
@@ -23,6 +19,8 @@ class SnackbarAfterItemDeletion {
             "Item deleted",
             Snackbar.LENGTH_SHORT
         )
+
+        //If you want to add cancel button
 //        snackbar.setAction("Cancel") {
 //            // Restore deleted item
 //            deletedSession.let {
@@ -32,9 +30,6 @@ class SnackbarAfterItemDeletion {
 //        }
 
         snackbar.show()
-
-
-
 
         coroutineScope.launch {
             delay(2000)

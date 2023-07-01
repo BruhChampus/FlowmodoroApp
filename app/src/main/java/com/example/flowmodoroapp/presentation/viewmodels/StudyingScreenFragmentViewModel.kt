@@ -1,4 +1,4 @@
-package com.example.flowmodoroapp.viewmodels
+package com.example.flowmodoroapp.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

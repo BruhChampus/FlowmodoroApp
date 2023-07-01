@@ -16,7 +16,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.flowmodoroapp.R
 import com.example.flowmodoroapp.data.Session
 
-import com.example.flowmodoroapp.viewmodels.StudyingScreenFragmentViewModel
+import com.example.flowmodoroapp.presentation.viewmodels.StudyingScreenFragmentViewModel
 import com.example.flowmodoroapp.databinding.FragmentStudyingScreenBinding
 
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +28,6 @@ class StudyingScreenFragment : Fragment() {
 
     private lateinit var binding: FragmentStudyingScreenBinding
     private val args: StudyingScreenFragmentArgs by navArgs()
-    //private var viewModel: StudyingScreenFragmentViewModel? = null
     private val viewModel: StudyingScreenFragmentViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,27 +35,18 @@ class StudyingScreenFragment : Fragment() {
     ): View? {
 
         binding = FragmentStudyingScreenBinding.inflate(layoutInflater)
-
-//        val dao = FlowmodoroDB.getInstance(requireContext()).flowmodoroDao
-//        val repository = SessionRepository(dao)
-//        val factory = StudyingScreenFragmentViewModelFactory(repository)
-     //   viewModel = ViewModelProvider(this, factory)[StudyingScreenFragmentViewModel::class.java]
-
         args.timeStudying.let {
-            Log.i("Studying screen timeStudying", "${args.timeStudying}")
-            // viewModel.setStudyingTimeMutableLiveData(it)
+            //Start study timer passing args.timeStudying parameter to it
             viewModel.startStudyTimer(args.timeStudying)
         }
         args.taskName.let { binding.tvTaskName.text = it }
-
-        //viewModel.startStudyTimer()
 
         viewModel.timeLiveData.observe(this) {
             binding.tvTimer.text = it
         }
 
+        //Observing studyingTime and changing text inside timer
         viewModel.studyingTimeLiveData.observe(this) {
-
             val studyTimePluralsValue = viewModel.studyingTimeLiveData.value?.let { studyTime ->
                 this.resources.getQuantityString(
                     R.plurals.plulars_minutes,
@@ -70,20 +60,22 @@ class StudyingScreenFragment : Fragment() {
         binding.ivStop.setOnClickListener {
             it.findNavController().navigate(R.id.leaveDialog)
         }
-//TODO раскоментить
-        binding.ivBreak.setOnClickListener {         //1
-            if (viewModel.studyingTimeLiveDataLocal.value!! < 0) {
+        /**
+         * check if the user has been studying for more than a minute, if yes - transfer to a break
+         * */
+        binding.ivBreak.setOnClickListener {
+            if (viewModel.studyingTimeLiveDataLocal.value!! < 1) {
                 Toast.makeText(
                     requireContext(),
                     "Atleast 1 minute needs to pass",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                //passing arguments for break fragment
                 val action =
                     StudyingScreenFragmentDirections.actionStudyingScreenFragmentToBreakScreenFragment(
                         binding.tvTaskName.text.toString(),
-                        //viewModel.studyingTimeLiveData.value?:1
-                        1
+                        viewModel.studyingTimeLiveData.value?:1
                     )
                 viewModel!!.stopStudyTimer()
                 it.findNavController().navigate(action)
@@ -91,6 +83,7 @@ class StudyingScreenFragment : Fragment() {
         }
 
 
+        //when back button on phone pressed
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(R.id.leaveDialog)
         }
@@ -105,6 +98,8 @@ class StudyingScreenFragment : Fragment() {
                     studyTime, studyTime
                 )
             }
+            //If ConfirmButton was pressed in leaveDialog, stop studyTime, create Session object
+            // and insert into database, navigate to mainScreen
             if(result){
                viewModel.stopStudyTimer()
                 val session = Session(
@@ -122,22 +117,6 @@ class StudyingScreenFragment : Fragment() {
     }
 
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        viewModel.stopStudyTimer()
-//    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.i("YourFragmentStuyd", "onDestroyView()")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i("YourFragmentStuyd", "onDestroy()")
-
-    }
 
 
 }

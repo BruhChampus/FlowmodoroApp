@@ -1,4 +1,4 @@
-package com.example.flowmodoroapp
+package com.example.flowmodoroapp.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ class SessionsRecyclerViewAdapter(private val sessionList: ArrayList<Session>) :
     RecyclerView.Adapter<SessionsRecyclerViewAdapter.MyViewHolder>() {
 
 
-      inner class MyViewHolder(val binding: SessionItemBinding) :
+      inner class MyViewHolder(private val binding: SessionItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(session: Session) {
             binding.ivDate.text = session.date
@@ -30,10 +30,5 @@ class SessionsRecyclerViewAdapter(private val sessionList: ArrayList<Session>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val session = sessionList[position]
         holder.bind(session)
-    }
-
-    fun setList(sessions:List<Session>){
-        sessionList.clear()
-        sessionList.addAll(sessions)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.flowmodoroapp.viewmodels
+package com.example.flowmodoroapp.presentation.viewmodels
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -9,7 +9,7 @@ import com.example.flowmodoroapp.data.Session
 import com.example.flowmodoroapp.data.SessionRepository
 import com.example.flowmodoroapp.domain.CurrentDateGetter
 
-//private val repository: SessionRepository в конструктор
+
 class BreakScreenFragmentViewModel( private val repository: SessionRepository) : ViewModel() {
 
     private var timeMutableLiveData = MutableLiveData<String>()

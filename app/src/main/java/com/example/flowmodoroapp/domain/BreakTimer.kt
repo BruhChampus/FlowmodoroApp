@@ -18,23 +18,19 @@ class BreakTimer(
                 countDownTimer = object : CountDownTimer(millisInFuture, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         timeMutableLiveData.value = updateTimerText(millisUntilFinished)
-                        Log.i("BreakTimer", "ticking")
-
                     }
 
                     override fun onFinish() {
                         isTimerOn.value = false
                         stopBreakTimer()
+                        //create and send notification
                         val breakEndNotification = BreakEndNotification(context)
                         breakEndNotification.createNotificationChannel()
                         breakEndNotification.displayNotification()
                     }
                 }
                 (countDownTimer as CountDownTimer).start()
-                Log.i("BreakTimer", "started")
-            }
-            Log.i("BreakTimer", "not null")
-
+             }
         }
 
 

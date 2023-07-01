@@ -4,33 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.flowmodoroapp.R
-import com.example.flowmodoroapp.SessionsRecyclerViewAdapter
-import com.example.flowmodoroapp.data.FlowmodoroDAO
+import com.example.flowmodoroapp.presentation.SessionsRecyclerViewAdapter
 import com.example.flowmodoroapp.data.Session
 import com.example.flowmodoroapp.data.SessionRepository
 import com.example.flowmodoroapp.databinding.FragmentResultsScreenBinding
 import com.example.flowmodoroapp.domain.SwipeToDelete
-import com.example.flowmodoroapp.viewmodels.ResultsFragmentViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ResultsScreenFragment : Fragment() {
 
     private lateinit var binding: FragmentResultsScreenBinding
-    private val flowmodoroDAO: FlowmodoroDAO by inject()
-     private val viewModel: ResultsFragmentViewModel by viewModel()
-
-
+     private val repository: SessionRepository by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,16 +37,15 @@ class ResultsScreenFragment : Fragment() {
             it.findNavController().navigate(R.id.settingsFragment)
         }
         lifecycleScope.launch {
-            flowmodoroDAO.getAllSessions().collect {
+            repository.getAllSessions().collect {
                val sessionsList = it as ArrayList<Session>
                 initRecyclerView(sessionsList)
             }
          }
-
         return binding.root
     }
 
-    fun initRecyclerView(sessionsList:ArrayList<Session>) {
+    private fun initRecyclerView(sessionsList:ArrayList<Session>) {
         binding.rvSessionsList.layoutManager = LinearLayoutManager(requireContext())
         if(sessionsList.isEmpty()){
             binding.rvSessionsList.visibility = View.GONE
@@ -69,7 +60,7 @@ class ResultsScreenFragment : Fragment() {
 
         val simpleItemTouchHelper = SwipeToDelete().createSimpleItemTouchHelper(
             lifecycleScope,
-            flowmodoroDAO,
+            repository,
             sessionsList,
             adapter,
             binding.rvSessionsList
@@ -78,15 +69,5 @@ class ResultsScreenFragment : Fragment() {
         ItemTouchHelper(
             simpleItemTouchHelper
         ).attachToRecyclerView(binding.rvSessionsList)
-        //  displaySessions()
     }
-
-//    private fun displaySessions() {
-//        viewModel.session.observe(requireActivity()) {
-//            adapter?.setList(it)
-//            adapter?.notifyDataSetChanged()
-//        }
-//    }
-
-
 }

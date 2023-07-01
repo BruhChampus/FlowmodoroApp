@@ -14,11 +14,12 @@ class StudyTimer(
     private var timer: Timer? = null
 
     fun startStudyTimer(minutesStudying: Int) {
+        //check if timer is not created yet
         if (timer == null) {
             var minutesStudyingOverAll: Int = minutesStudying
             studyingTimeMutableLiveData.value = minutesStudyingOverAll
 
-            var minutesMustPass = 1
+            var minutesMustPass = 1//needed to not let user abuse break time after first break
 
             timer = Timer()
             val startTime = System.currentTimeMillis()
