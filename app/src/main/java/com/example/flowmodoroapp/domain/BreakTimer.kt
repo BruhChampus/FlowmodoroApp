@@ -1,7 +1,6 @@
-package com.example.flowmodoroapp
+package com.example.flowmodoroapp.domain
 
 import android.content.Context
-import android.content.Intent
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

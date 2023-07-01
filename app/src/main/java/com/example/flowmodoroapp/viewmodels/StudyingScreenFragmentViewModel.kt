@@ -1,16 +1,15 @@
 package com.example.flowmodoroapp.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.flowmodoroapp.StudyTimer
+import com.example.flowmodoroapp.domain.StudyTimer
 import com.example.flowmodoroapp.data.Session
 import com.example.flowmodoroapp.data.SessionRepository
+import com.example.flowmodoroapp.domain.CurrentDateGetter
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import java.util.*
 
 
 class StudyingScreenFragmentViewModel(private val repository: SessionRepository) : ViewModel() {
@@ -36,9 +35,6 @@ class StudyingScreenFragmentViewModel(private val repository: SessionRepository)
         get() = studyingTimeMutableLiveDataLocal
 
 
-
-    //TODO Все таки попробовать в onDestroyView останавливать таймер только придумать как сохранять состояние
-    //TODO сделать что свайпом можно удалять елементы из бд
     private var studyTimer: StudyTimer = StudyTimer(
         timeMutableLiveData = timeMutableLiveData,
         studyingTimeMutableLiveData = studyingTimeMutableLiveData,
@@ -55,16 +51,10 @@ class StudyingScreenFragmentViewModel(private val repository: SessionRepository)
         studyTimer.stopStudyTimer()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        Log.i("OnCleared", "ViewMOdel is cleared")
-    }
 
+    //Get formatted current date
     fun getCurrentDate(): String {
-        val year = Calendar.YEAR
-        val month = Calendar.WEEK_OF_MONTH
-        val day = Calendar.DAY_OF_MONTH
-        return String.format("DD.MM.YYYY", day, month, year)
+        return CurrentDateGetter().getCurrentDate()
     }
 
     suspend fun insertSession(session: Session){

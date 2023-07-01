@@ -1,10 +1,11 @@
 package com.example.flowmodoroapp.data
 
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.flow.Flow
 
 class SessionRepository(private val dao: FlowmodoroDAO) {
 
-    suspend fun insertSession(session: Session)  {
+     suspend fun insertSession(session: Session) {
         dao.insertSession(session)
     }
 

@@ -1,4 +1,4 @@
-package com.example.flowmodoroapp.fragments
+package com.example.flowmodoroapp.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,6 +1,7 @@
 package com.example.flowmodoroapp.di
 
 import com.example.flowmodoroapp.viewmodels.BreakScreenFragmentViewModel
+import com.example.flowmodoroapp.viewmodels.ResultsFragmentViewModel
 import com.example.flowmodoroapp.viewmodels.StudyingScreenFragmentViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -14,6 +15,13 @@ val viewModelModule = module {
 
     viewModel {
         BreakScreenFragmentViewModel(
+            repository = get()
+        )
+    }
+
+
+    viewModel {
+        ResultsFragmentViewModel(
             repository = get()
         )
     }

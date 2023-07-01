@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_red"
-    tools:context=".fragments.MainScreenFragment">
+    tools:context=".presentation.fragments.MainScreenFragment">
 
     <FrameLayout
         android:id="@+id/fl_app_logo"

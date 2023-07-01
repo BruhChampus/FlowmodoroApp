@@ -1,4 +1,4 @@
-package com.example.flowmodoroapp.fragments
+package com.example.flowmodoroapp.presentation.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +18,7 @@ import com.example.flowmodoroapp.data.Session
 
 import com.example.flowmodoroapp.viewmodels.StudyingScreenFragmentViewModel
 import com.example.flowmodoroapp.databinding.FragmentStudyingScreenBinding
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -44,19 +45,19 @@ class StudyingScreenFragment : Fragment() {
         args.timeStudying.let {
             Log.i("Studying screen timeStudying", "${args.timeStudying}")
             // viewModel.setStudyingTimeMutableLiveData(it)
-            viewModel!!.startStudyTimer(args.timeStudying)
+            viewModel.startStudyTimer(args.timeStudying)
         }
         args.taskName.let { binding.tvTaskName.text = it }
 
         //viewModel.startStudyTimer()
 
-        viewModel!!.timeLiveData.observe(this) {
+        viewModel.timeLiveData.observe(this) {
             binding.tvTimer.text = it
         }
 
-        viewModel!!.studyingTimeLiveData.observe(this) {
+        viewModel.studyingTimeLiveData.observe(this) {
 
-            val studyTimePluralsValue = viewModel!!.studyingTimeLiveData.value?.let { studyTime ->
+            val studyTimePluralsValue = viewModel.studyingTimeLiveData.value?.let { studyTime ->
                 this.resources.getQuantityString(
                     R.plurals.plulars_minutes,
                     studyTime, studyTime
@@ -71,7 +72,7 @@ class StudyingScreenFragment : Fragment() {
         }
 //TODO раскоментить
         binding.ivBreak.setOnClickListener {         //1
-            if (viewModel!!.studyingTimeLiveDataLocal.value!! < 0) {
+            if (viewModel.studyingTimeLiveDataLocal.value!! < 0) {
                 Toast.makeText(
                     requireContext(),
                     "Atleast 1 minute needs to pass",
@@ -98,12 +99,18 @@ class StudyingScreenFragment : Fragment() {
         //Listener to check if ConfirmButton was pressed in leaveDialog
         setFragmentResultListener("isConfirmPressed") { _, bundle ->
             val result = bundle.getBoolean("isConfirmPressed")
+            val studyTimePluralsValue = viewModel.studyingTimeLiveData.value?.let { studyTime ->
+                this.resources.getQuantityString(
+                    R.plurals.plulars_minutes,
+                    studyTime, studyTime
+                )
+            }
             if(result){
-               viewModel!!.stopStudyTimer()
+               viewModel.stopStudyTimer()
                 val session = Session(
                     date = viewModel.getCurrentDate(),
                     taskName = binding.tvTaskName.text.toString(),
-                    minutes = binding.tvTimeStudy.text.toString()
+                    minutes = studyTimePluralsValue?:"error"
                 )
                 lifecycleScope.launch(Dispatchers.IO) {viewModel.insertSession(session)}
                 findNavController().navigate(R.id.mainScreenFragment)

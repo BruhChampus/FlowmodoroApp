@@ -1,4 +1,4 @@
-package com.example.flowmodoroapp
+package com.example.flowmodoroapp.domain
 
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
