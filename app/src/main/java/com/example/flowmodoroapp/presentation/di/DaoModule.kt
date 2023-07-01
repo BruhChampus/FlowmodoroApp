@@ -1,4 +1,4 @@
-package com.example.flowmodoroapp.di
+package com.example.flowmodoroapp.presentation.di
 
 import com.example.flowmodoroapp.data.FlowmodoroDAO
 import com.example.flowmodoroapp.data.FlowmodoroDB

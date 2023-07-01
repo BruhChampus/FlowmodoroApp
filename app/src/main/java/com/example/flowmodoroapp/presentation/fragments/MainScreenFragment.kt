@@ -1,4 +1,4 @@
-package com.example.flowmodoroapp.fragments
+package com.example.flowmodoroapp.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,8 +16,6 @@ import com.example.flowmodoroapp.databinding.FragmentMainScreenBinding
 class MainScreenFragment : Fragment() {
 
     private lateinit var binding: FragmentMainScreenBinding
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -41,8 +39,7 @@ class MainScreenFragment : Fragment() {
 
         binding.flAppLogo.setOnClickListener {
             Toast.makeText(requireContext(), "Hello there!", Toast.LENGTH_SHORT).show()
-            //TODO with help of coroutines add delay
-        }
+         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { requireActivity().finish() }
         // Inflate the layout for this fragment

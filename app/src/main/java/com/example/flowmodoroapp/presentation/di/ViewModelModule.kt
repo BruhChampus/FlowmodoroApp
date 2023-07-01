@@ -1,7 +1,7 @@
-package com.example.flowmodoroapp.di
+package com.example.flowmodoroapp.presentation.di
 
-import com.example.flowmodoroapp.viewmodels.BreakScreenFragmentViewModel
-import com.example.flowmodoroapp.viewmodels.StudyingScreenFragmentViewModel
+import com.example.flowmodoroapp.presentation.viewmodels.BreakScreenFragmentViewModel
+import com.example.flowmodoroapp.presentation.viewmodels.StudyingScreenFragmentViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -17,4 +17,5 @@ val viewModelModule = module {
             repository = get()
         )
     }
+
 }

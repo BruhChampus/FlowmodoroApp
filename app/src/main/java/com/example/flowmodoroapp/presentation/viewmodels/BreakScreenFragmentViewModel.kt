@@ -1,21 +1,17 @@
-package com.example.flowmodoroapp.viewmodels
+package com.example.flowmodoroapp.presentation.viewmodels
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.flowmodoroapp.BreakTimer
+import com.example.flowmodoroapp.domain.BreakTimer
 import com.example.flowmodoroapp.data.Session
 import com.example.flowmodoroapp.data.SessionRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.util.Calendar
+import com.example.flowmodoroapp.domain.CurrentDateGetter
 
-//private val repository: SessionRepository в конструктор
+
 class BreakScreenFragmentViewModel( private val repository: SessionRepository) : ViewModel() {
-   val session = repository.getSessions()//is needed for observing changes in DB
+
     private var timeMutableLiveData = MutableLiveData<String>()
     val timeLiveData: LiveData<String>
         get() = timeMutableLiveData
@@ -41,11 +37,9 @@ class BreakScreenFragmentViewModel( private val repository: SessionRepository) :
     }
 
 
+    //Get formatted current date
     fun getCurrentDate(): String {
-        val year = Calendar.YEAR
-        val month = Calendar.WEEK_OF_MONTH
-        val day = Calendar.DAY_OF_MONTH
-        return String.format("DD.MM.YYYY", day, month, year)
+      return CurrentDateGetter().getCurrentDate()
     }
 
    suspend fun insertSession(session: Session) {

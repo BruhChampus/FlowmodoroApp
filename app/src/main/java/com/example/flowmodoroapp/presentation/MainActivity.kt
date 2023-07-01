@@ -1,16 +1,13 @@
-package com.example.flowmodoroapp
+package com.example.flowmodoroapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
+
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import com.example.flowmodoroapp.databinding.ActivityMainBinding
 
+import com.example.flowmodoroapp.databinding.ActivityMainBinding
+//TODO очной и дневной режим, найти тост с All Good, добавить анимации при переходах, сделать нормальний Readme
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,12 +15,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         requestLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
 
     }
 
-    val requestLauncher =
+    //Permission for notifications
+    private val requestLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (it) {
                 Toast.makeText(

@@ -1,4 +1,4 @@
-package com.example.flowmodoroapp.fragments
+package com.example.flowmodoroapp.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,9 +13,6 @@ import com.example.flowmodoroapp.databinding.FragmentSettingsBinding
 class SettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,

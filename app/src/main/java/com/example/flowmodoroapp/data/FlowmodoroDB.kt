@@ -9,7 +9,6 @@ import androidx.room.RoomDatabase
 @Database(entities = [Session::class], version = 1)
 abstract class FlowmodoroDB : RoomDatabase() {
     abstract val flowmodoroDao: FlowmodoroDAO
-
     companion object {
         @Volatile
         private var INSTANCE: FlowmodoroDB? = null
