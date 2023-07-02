@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_main_screen">
         <action
             android:id="@+id/action_mainScreenFragment_to_studyingScreenFragment"
-            app:destination="@id/studyingScreenFragment" />
+            app:destination="@id/studyingScreenFragment"
+            app:enterAnim="@anim/zoom_in" />
         <action
             android:id="@+id/action_mainScreenFragment_to_resultsScreenFragment"
             app:destination="@id/resultsScreenFragment" />
@@ -27,7 +28,7 @@
         <action
             android:id="@+id/action_studyingScreenFragment_to_breakScreenFragment"
             app:destination="@id/breakScreenFragment"
-         />
+            app:enterAnim="@anim/push_down_in" />
         <action
             android:id="@+id/action_studyingScreenFragment_to_leaveDialog"
             app:destination="@id/leaveDialog" />
@@ -63,7 +64,8 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_breakScreenFragment_to_studyingScreenFragment"
-            app:destination="@id/studyingScreenFragment" />
+            app:destination="@id/studyingScreenFragment"
+            app:enterAnim="@anim/push_down_in" />
     </fragment>
     <fragment
         android:id="@+id/resultsScreenFragment"
