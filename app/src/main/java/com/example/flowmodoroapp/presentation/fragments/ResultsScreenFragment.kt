@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.flowmodoroapp.utils.ClickListener
 import com.example.flowmodoroapp.R
 import com.example.flowmodoroapp.presentation.SessionsRecyclerViewAdapter
 import com.example.flowmodoroapp.data.Session
@@ -19,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 
-class ResultsScreenFragment : Fragment() {
+class ResultsScreenFragment : Fragment(), ClickListener {
 
     private lateinit var binding: FragmentResultsScreenBinding
      private val repository: SessionRepository by inject()
@@ -55,7 +57,7 @@ class ResultsScreenFragment : Fragment() {
             binding.tvNoDataYet.visibility = View.GONE
         }
 
-        val adapter = SessionsRecyclerViewAdapter(sessionsList)
+        val adapter = SessionsRecyclerViewAdapter(sessionsList,this)
         binding.rvSessionsList.adapter = adapter
 
         val simpleItemTouchHelper = SwipeToDelete().createSimpleItemTouchHelper(
@@ -69,5 +71,9 @@ class ResultsScreenFragment : Fragment() {
         ItemTouchHelper(
             simpleItemTouchHelper
         ).attachToRecyclerView(binding.rvSessionsList)
+    }
+
+    override fun onClick(session: Session) {
+        Toast.makeText(requireContext(), session.taskName, Toast.LENGTH_SHORT).show()
     }
 }

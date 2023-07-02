@@ -1,5 +1,6 @@
 package com.example.flowmodoroapp.presentation.fragments
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import com.example.flowmodoroapp.R
+import com.example.flowmodoroapp.data.MySharedPreference
 import com.example.flowmodoroapp.databinding.FragmentSettingsBinding
 
 
@@ -28,7 +30,12 @@ class SettingsFragment : Fragment() {
             it.findNavController().navigate(R.id.resultsScreenFragment)
         }
 
-        binding.scSwitchNightMode.setOnCheckedChangeListener{buttonview, isChecked ->
+        val mySharedPreference = MySharedPreference(requireActivity())
+
+        binding.scSwitchNightMode.isChecked = mySharedPreference.getSharedPref()
+
+
+        binding.scSwitchNightMode.setOnCheckedChangeListener{_, isChecked ->
             val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
             if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO && isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -37,8 +44,13 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        mySharedPreference.saveInSharedPref(binding.scSwitchNightMode.isChecked)
+
         return binding.root
     }
+
+
+
 
 
 }

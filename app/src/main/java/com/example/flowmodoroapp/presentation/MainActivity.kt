@@ -10,8 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 
 import com.example.flowmodoroapp.databinding.ActivityMainBinding
 
-//TODO очной и дневной режим, сделать нормальний Readme
-class MainActivity : AppCompatActivity() {
+ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
