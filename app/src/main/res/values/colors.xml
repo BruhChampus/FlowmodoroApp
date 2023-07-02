@@ -13,5 +13,14 @@
     <color name="dark_red">#B13333</color>
     <color name="yellow">#FFEB3B</color>
 
+    <color name="gray">#4E4C4C</color>
+
+
+    <color name="dark_gray">#1E1E1E</color>
+    <color name="pink_purple">#BB86FC</color>
+
+
+
+
 
 </resources>

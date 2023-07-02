@@ -58,7 +58,7 @@
         android:background="@null"
          android:gravity="center"
         android:hint="Task Name"
-        android:maxLength="30"
+        android:maxLength="25"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="28dp"

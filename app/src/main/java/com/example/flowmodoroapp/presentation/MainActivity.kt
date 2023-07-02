@@ -1,14 +1,16 @@
 package com.example.flowmodoroapp.presentation
 
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 
 import com.example.flowmodoroapp.databinding.ActivityMainBinding
-//TODO очной и дневной режим, найти тост с All Good, добавить анимации при переходах, сделать нормальний Readme
-class MainActivity : AppCompatActivity() {
+
+ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,16 +21,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
     //Permission for notifications
     private val requestLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
-                Toast.makeText(
-                    this,
-                    "All good",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
+            if (!it) {
                 Toast.makeText(
                     this,
                     "OOPS, seems that you've denied permission",
