@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.flowmodoroapp.R
 
 import com.example.flowmodoroapp.databinding.ActivityMainBinding
 
@@ -16,7 +17,6 @@ import com.example.flowmodoroapp.databinding.ActivityMainBinding
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         requestLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
 
     }

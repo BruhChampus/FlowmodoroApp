@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_red">
+    android:background="?attr/colorPrimary">
 
     <ImageView
         android:id="@+id/iv_close"
@@ -15,7 +15,7 @@
         android:src="@drawable/close"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/light_red" />
+        app:tint="?attr/colorPrimary" />
 
     <ImageView
         android:id="@+id/iv_results"
@@ -26,7 +26,7 @@
         android:src="@drawable/bar_chart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/light_red" />
+        app:tint="?attr/colorPrimary" />
 
 
     <TextView
@@ -35,9 +35,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
         android:text="@string/settings"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="42sp"
         android:textStyle="bold"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_close" />
 
@@ -47,7 +48,7 @@
         android:layout_height="1dp"
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="6dp"
-        android:background="@color/white"
+        android:background="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_settings" />
@@ -59,8 +60,9 @@
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="12dp"
         android:text="Dark theme"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="24sp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_horizontal_first" />
 
@@ -68,10 +70,51 @@
         android:id="@+id/sc_switch_night_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-         android:layout_marginTop="6dp"
         android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="6dp"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_horizontal_first" />
 
+
+    <LinearLayout
+        android:id="@+id/ll_colors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_dark_theme">
+
+        <ImageView
+            android:id="@+id/iv_yellow"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/yellow"
+            android:src="@drawable/color_outline"
+
+            />
+
+        <ImageView
+            android:id="@+id/iv_white"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/white"
+            android:src="@drawable/color_outline" />
+
+        <ImageView
+            android:id="@+id/iv_red"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/light_red"
+            android:src="@drawable/color_outline" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_red"
+    android:background="?attr/colorPrimary"
     tools:context=".presentation.fragments.MainScreenFragment">
 
     <FrameLayout
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/flowmodoro"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="42sp"
             android:textStyle="bold" />
     </FrameLayout>
@@ -37,7 +37,7 @@
         android:src="@drawable/settings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/light_red" />
+        app:tint="?attr/colorPrimary" />
 
     <ImageView
         android:id="@+id/iv_results"
@@ -48,7 +48,7 @@
         android:src="@drawable/bar_chart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/light_red" />
+        app:tint="?attr/colorPrimary" />
 
     <EditText
         android:id="@+id/et_task_name"
@@ -58,8 +58,8 @@
         android:gravity="center"
         android:hint="Task Name"
         android:maxLength="25"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="?attr/colorOnPrimary"
+        android:textColorHint="?attr/colorOnPrimary"
         android:textSize="28sp"
         app:layout_constraintBottom_toTopOf="@id/iv_start"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,10 +71,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:backgroundTint="@color/light_red"
+        android:backgroundTint="?attr/colorPrimary"
         android:src="@drawable/start_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_task_name" />
+        app:layout_constraintTop_toBottomOf="@id/et_task_name"
+        app:tint="?attr/colorOnPrimary" />
 </androidx.constraintlayout.widget.ConstraintLayout>
