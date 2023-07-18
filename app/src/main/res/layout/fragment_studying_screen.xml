@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_red">
+    android:background="?attr/colorPrimary">
 
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/concentrate"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +29,7 @@
         android:background="@drawable/flowmodoro_icon_circle"
         android:paddingHorizontal="70dp"
         android:paddingVertical="100dp"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="42sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +45,7 @@
         android:gravity="center"
         android:padding="6dp"
         android:text="@string/task_name"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="28sp"
         app:layout_constraintBottom_toTopOf="@id/tv_time_study"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/iv_stop"
@@ -74,24 +74,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:backgroundTint="@color/light_red"
+        android:backgroundTint="?attr/colorPrimary"
         android:src="@drawable/stop_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/iv_break"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_time_study" />
+        app:layout_constraintTop_toBottomOf="@id/tv_time_study"
+        app:tint="?attr/colorOnPrimary" />
 
     <ImageView
         android:id="@+id/iv_break"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:backgroundTint="@color/light_red"
+        android:backgroundTint="?attr/colorPrimary"
         android:src="@drawable/free_breakfast"
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_stop"
-        app:layout_constraintTop_toBottomOf="@id/tv_time_study" />
+        app:layout_constraintTop_toBottomOf="@id/tv_time_study"
+        app:tint="?attr/colorOnPrimary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

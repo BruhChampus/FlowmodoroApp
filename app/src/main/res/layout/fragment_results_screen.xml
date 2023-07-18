@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_red">
+    android:background="?attr/colorPrimary">
 
     <ImageView
         android:id="@+id/iv_settings"
@@ -15,7 +15,7 @@
         android:src="@drawable/settings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/light_red" />
+        app:tint="?attr/colorPrimary" />
 
     <ImageView
         android:id="@+id/iv_close"
@@ -26,7 +26,7 @@
         android:src="@drawable/close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/light_red" />
+        app:tint="?attr/colorPrimary" />
 
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="No data yet"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="28sp"
         app:layout_constraintTop_toBottomOf="@id/iv_settings"
         app:layout_constraintEnd_toEndOf="parent"

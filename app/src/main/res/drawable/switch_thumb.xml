@@ -7,7 +7,7 @@
 </item>
     <item>
         <shape android:shape="oval">
-            <solid android:color="@color/white" /> <!-- Color when switch is unchecked/inactive -->
+            <solid android:color="?attr/colorOnPrimary" /> <!-- Color when switch is unchecked/inactive -->
         </shape>
     </item>
 </selector>

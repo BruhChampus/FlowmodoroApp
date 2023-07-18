@@ -21,7 +21,6 @@ class MainScreenFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentMainScreenBinding.inflate(layoutInflater)
-
         binding.ivStart.setOnClickListener {
             val action =
                 MainScreenFragmentDirections.actionMainScreenFragmentToStudyingScreenFragment(
